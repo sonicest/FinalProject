@@ -2,6 +2,7 @@ package pt.ipt.finalproject
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.os.Build
@@ -35,6 +36,7 @@ class CameraActivity : AppCompatActivity() {
 
     private lateinit var cameraExecutor: ExecutorService
 
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +55,17 @@ class CameraActivity : AppCompatActivity() {
         }
 
         // Set up the listeners for take photo and video capture buttons
+
         binding.imageCaptureButton.setOnClickListener { takePhoto() }
+        binding.gallery.setOnClickListener {
+            Intent(
+                Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            ).also { pickerIntent ->
+                pickerIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                startActivityForResult(pickerIntent, REQUEST_CODE_PICK_IMAGE)
+            }
+        }
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
@@ -161,6 +173,20 @@ class CameraActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
     }
 
+    //Доступ до галереї
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == RESULT_OK) {
+            data?.data?.let {}
+//            data?.data?.let { imageUri ->
+//                Intent(applicationContext, EditImageActivity::class.java).also{ editImageIntent ->
+//                    editImageIntent.putExtra(KEY_IMAGE_URI, imageUri)
+//                    startActivity(editImageIntent)
+//                }
+//            }
+        }
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -171,6 +197,8 @@ class CameraActivity : AppCompatActivity() {
         private const val TAG = "CameraToObserve"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
+        private const val REQUEST_CODE_PICK_IMAGE = 1
+        const val KEY_IMAGE_URI = "imageUri"
         private val REQUIRED_PERMISSIONS =
             mutableListOf(
                 Manifest.permission.CAMERA,
