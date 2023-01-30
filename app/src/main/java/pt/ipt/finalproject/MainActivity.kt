@@ -17,14 +17,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_main)
-        //setContentView(binding.root)
-        //  setListener()
+        //setContentView(R.layout.activity_main)
+        setContentView(binding.root)
+         setListener()
     }
 
     //Функція, що виконує запит користувача при нажатті на кнопки
-    //private fun setListener() {
-//        binding.buttonEditNewImage.setOnClickListener{
+    private fun setListener() {
+        binding.buttonCamera.setOnClickListener {
 //            Intent(
 //                Intent.ACTION_PICK,
 //                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -32,8 +32,12 @@ class MainActivity : AppCompatActivity() {
 //                pickerIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 //                startActivityForResult(pickerIntent, REQUEST_CODE_PICK_IMAGE)
 //            }
-    // }
-//        binding.buttonViewSavedImages.setOnClickListener {
+            Intent(applicationContext, CameraActivity::class.java).also{
+                startActivity(it)
+            }
+        }
+    }
+//        binding.buttonMap.setOnClickListener {
 //            Intent(applicationContext, SavedImagesActivity::class.java).also{
 //                startActivity(it)
 //            }
