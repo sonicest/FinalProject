@@ -7,6 +7,20 @@
     android:background="@color/white"
     tools:context=".ChosenPhoto">
 
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:text="@string/qtext"
+        android:textColor="@color/landingBackgroundEnd"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <ProgressBar
         android:id="@+id/previewProgressBar"
         android:layout_width="wrap_content"
@@ -20,7 +34,6 @@
         android:id="@+id/image_preview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
         android:padding="@dimen/_7ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +45,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="@dimen/_40sdp"
-        android:layout_marginBottom="@dimen/_40sdp"
+        android:layout_marginBottom="@dimen/_35sdp"
         android:src="@drawable/ic_save2"/>
 
 
@@ -45,5 +58,17 @@
         android:layout_marginEnd="@dimen/_40sdp"
         android:layout_marginBottom="@dimen/_40sdp"
         android:src="@drawable/ic_share"/>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="144dp"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

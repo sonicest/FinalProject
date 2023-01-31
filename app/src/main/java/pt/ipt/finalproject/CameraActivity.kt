@@ -72,6 +72,11 @@ class CameraActivity : AppCompatActivity() {
                 startActivityForResult(pickerIntent, REQUEST_CODE_PICK_IMAGE)
             }
         }
+        binding.savedPhotos.setOnClickListener {
+            Intent(applicationContext, SavedImages::class.java).also{
+                startActivity(it)
+            }
+        }
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
@@ -160,7 +165,7 @@ class CameraActivity : AppCompatActivity() {
             val preview = Preview.Builder()
                 .build()
                 .also {
-                    it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
+                    it.setSurfaceProvider(binding.cameraOpen.surfaceProvider)
                 }
             imageCapture = ImageCapture.Builder().build()
 

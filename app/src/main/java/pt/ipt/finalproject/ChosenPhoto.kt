@@ -48,15 +48,40 @@ class ChosenPhoto : AppCompatActivity() {
             dataState.bitmap?.let { bitmap ->
                 //Firstly filtered image=original image
                 originalBitmap = bitmap
-                filteredBitmap.value = bitmap
+                //filteredBitmap.value = bitmap
                 with(originalBitmap) {
                     gpuImage.setImage(this)
                     binding.imagePreview.show()
-                    viewModel.loadImageFilters(this)
+                    viewModel.loadImage(this)
                 }
                 //binding.imagePreview.setImageBitmap(bitmap)
             } ?: kotlin.run {
                 dataState.error?.let { error ->
+                    displayToast(error)
+                }
+            }
+        }
+
+        //Збереження відредагованого фото
+        viewModel.saveFilteredImageUiState.observe(this) {
+            val saveFilteredImageDataState = it ?: return@observe
+            if (saveFilteredImageDataState.isLoading) {
+                binding.save.visibility = View.GONE
+                binding.previewProgressBar.visibility = View.VISIBLE
+            } else {
+                binding.previewProgressBar.visibility = View.GONE
+                binding.save.visibility = View.VISIBLE
+            }
+            saveFilteredImageDataState.uri?.let { savedImageUri ->
+                Intent(
+                    applicationContext,
+                    MainActivity::class.java
+                ).also { filteredImageIntent ->
+                    filteredImageIntent.putExtra(KEY_FILTERED_IMAGE_URI, savedImageUri)
+                    startActivity(filteredImageIntent)
+                }
+            } ?: kotlin.run {
+                saveFilteredImageDataState.error?.let { error ->
                     displayToast(error)
                 }
             }
@@ -86,7 +111,7 @@ class ChosenPhoto : AppCompatActivity() {
         binding.save.setOnClickListener{
            // filteredBitmap.value?.let{bitmap->
             originalBitmap?.let{bitmap->
-                viewModel.saveFilteredImage(bitmap)
+                viewModel.saveEditImage(bitmap)
             }
         }
 

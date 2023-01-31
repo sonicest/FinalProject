@@ -67,7 +67,7 @@ class EditImageViewModel(private val editImageRepository: EditImageRepository) :
 //        }
 //    }
 
-     fun loadImageFilters(originalImage: Bitmap): Bitmap? {
+     fun loadImage(originalImage: Bitmap): Bitmap? {
         return runCatching {
             val previewWidth = 150
             val previewHeight = originalImage.height * previewWidth / originalImage.width
@@ -75,6 +75,7 @@ class EditImageViewModel(private val editImageRepository: EditImageRepository) :
         }.getOrDefault(originalImage)
     }
 
+    /////////////
 //    private fun emitImageFiltersUiState(
 //        isLoading: Boolean = false,
 //        imageFilters: List<ImageFilter>? = null,
@@ -95,20 +96,20 @@ class EditImageViewModel(private val editImageRepository: EditImageRepository) :
     private val saveFilteredImageDataState= MutableLiveData<SaveFilteredImageDataState>()
     val saveFilteredImageUiState: LiveData<SaveFilteredImageDataState> get() = saveFilteredImageDataState
 
-    fun saveFilteredImage(filteredBitmap: Bitmap){
+    fun saveEditImage(editedBitmap: Bitmap){
         Coroutines.io{
             runCatching{
-                emitSaveFilteredImageUiState(isLoading = true)
-                editImageRepository.saveFilteredImage(filteredBitmap)
+                emitSaveEditImageUiState(isLoading = true)
+                editImageRepository.saveEditImage(editedBitmap)
             }.onSuccess { savedImageUri ->
-                emitSaveFilteredImageUiState(uri = savedImageUri)
+                emitSaveEditImageUiState(uri = savedImageUri)
             }.onFailure {
-                emitSaveFilteredImageUiState(error = it.message.toString())
+                emitSaveEditImageUiState(error = it.message.toString())
             }
         }
     }
 
-    private fun emitSaveFilteredImageUiState(
+    private fun emitSaveEditImageUiState(
         isLoading: Boolean = false,
         uri: Uri? = null,
         error: String? = null

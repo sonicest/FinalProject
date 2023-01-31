@@ -4,8 +4,10 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import jp.co.cyberagent.android.gpuimage.filter.*
@@ -453,18 +455,20 @@ class EditImageRepositoryImpl(private val context: Context) : EditImageRepositor
     }
 
     //Збереження відредагованого фото в папку зі зберережиними фото
-    override suspend fun saveFilteredImage(filteredBitmap: Bitmap): Uri? {
+    @RequiresApi(Build.VERSION_CODES.Q)
+    override suspend fun saveEditImage(editedBitmap: Bitmap): Uri? {
         return try {
             val mediaStorageDirectory = File(
                 context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
                 "Saved Images"
+                //MediaStore.Images.Media.RELATIVE_PATH, "Pictures/Saved"
             )
             if(!mediaStorageDirectory.exists()){
                 mediaStorageDirectory.mkdirs()
             }
             val fileName = "IMG_${System.currentTimeMillis()}.jpg"
             val file = File(mediaStorageDirectory, fileName)
-            saveFile(file, filteredBitmap)
+            saveFile(file, editedBitmap)
             FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
         } catch (exception: Exception){
             null
