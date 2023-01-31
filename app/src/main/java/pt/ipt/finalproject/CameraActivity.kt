@@ -23,12 +23,14 @@ import androidx.camera.video.VideoCapture
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import pt.ipt.finalproject.databinding.ActivityCameraBinding
+import pt.ipt.finalproject.databinding.ActivityChosenPhotoBinding
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
+   // private lateinit var binding: ActivityChosenPhotoBinding
 
     private var imageCapture: ImageCapture? = null
     private var videoCapture: VideoCapture<Recorder>? = null
@@ -55,8 +57,12 @@ class CameraActivity : AppCompatActivity() {
         }
 
         // Set up the listeners for take photo and video capture buttons
-
-        binding.imageCaptureButton.setOnClickListener { takePhoto() }
+        binding.imageCaptureButton.setOnClickListener {
+            takePhoto()
+//            Intent(applicationContext, ChosenPhoto::class.java).also{
+//                startActivity(it)
+//            }
+        }
         binding.gallery.setOnClickListener {
             Intent(
                 Intent.ACTION_PICK,
@@ -174,16 +180,15 @@ class CameraActivity : AppCompatActivity() {
     }
 
     //Доступ до галереї
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+      override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == RESULT_OK) {
-            data?.data?.let {}
-//            data?.data?.let { imageUri ->
-//                Intent(applicationContext, EditImageActivity::class.java).also{ editImageIntent ->
-//                    editImageIntent.putExtra(KEY_IMAGE_URI, imageUri)
-//                    startActivity(editImageIntent)
-//                }
-//            }
+        if(requestCode == REQUEST_CODE_PICK_IMAGE && resultCode== RESULT_OK){
+            data?.data?.let { imageUri ->
+                Intent(applicationContext, ChosenPhoto::class.java).also{ showChosenPhoto->
+                    showChosenPhoto.putExtra(KEY_IMAGE_URI, imageUri)
+                    startActivity(showChosenPhoto)
+                }
+            }
         }
     }
 
@@ -199,6 +204,7 @@ class CameraActivity : AppCompatActivity() {
         private const val REQUEST_CODE_PERMISSIONS = 10
         private const val REQUEST_CODE_PICK_IMAGE = 1
         const val KEY_IMAGE_URI = "imageUri"
+        const val KEY_FILTERED_IMAGE_URI = "chosenImageUri"
         private val REQUIRED_PERMISSIONS =
             mutableListOf(
                 Manifest.permission.CAMERA,
