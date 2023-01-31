@@ -30,7 +30,7 @@ import java.util.concurrent.Executors
 
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
-   // private lateinit var binding: ActivityChosenPhotoBinding
+    // private lateinit var binding: ActivityChosenPhotoBinding
 
     private var imageCapture: ImageCapture? = null
     private var videoCapture: VideoCapture<Recorder>? = null
@@ -138,7 +138,11 @@ class CameraActivity : AppCompatActivity() {
                 override fun
                         onImageSaved(output: ImageCapture.OutputFileResults) {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
-                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                    Intent(applicationContext, ChosenPhoto::class.java).also { showChosenPhoto ->
+                        showChosenPhoto.putExtra(KEY_IMAGE_URI, output.savedUri)
+                        startActivity(showChosenPhoto)
+                    }
                     Log.d(TAG, msg)
                 }
             }
@@ -180,11 +184,11 @@ class CameraActivity : AppCompatActivity() {
     }
 
     //Доступ до галереї
-      override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == REQUEST_CODE_PICK_IMAGE && resultCode== RESULT_OK){
+        if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == RESULT_OK) {
             data?.data?.let { imageUri ->
-                Intent(applicationContext, ChosenPhoto::class.java).also{ showChosenPhoto->
+                Intent(applicationContext, ChosenPhoto::class.java).also { showChosenPhoto ->
                     showChosenPhoto.putExtra(KEY_IMAGE_URI, imageUri)
                     startActivity(showChosenPhoto)
                 }
@@ -204,7 +208,8 @@ class CameraActivity : AppCompatActivity() {
         private const val REQUEST_CODE_PERMISSIONS = 10
         private const val REQUEST_CODE_PICK_IMAGE = 1
         const val KEY_IMAGE_URI = "imageUri"
-        const val KEY_FILTERED_IMAGE_URI = "chosenImageUri"
+
+        //  const val KEY_FILTERED_IMAGE_URI = "chosenImageUri"
         private val REQUIRED_PERMISSIONS =
             mutableListOf(
                 Manifest.permission.CAMERA,
