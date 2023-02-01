@@ -69,8 +69,8 @@ class EditImageViewModel(private val editImageRepository: EditImageRepository) :
 
      fun loadImage(originalImage: Bitmap): Bitmap? {
         return runCatching {
-            val previewWidth = 150
-            val previewHeight = originalImage.height * previewWidth / originalImage.width
+            val previewWidth = originalImage.width
+            val previewHeight = originalImage.height //* previewWidth / originalImage.width
             Bitmap.createScaledBitmap(originalImage, previewWidth, previewHeight, false)
         }.getOrDefault(originalImage)
     }
@@ -93,14 +93,14 @@ class EditImageViewModel(private val editImageRepository: EditImageRepository) :
     //endregion
 
     //region:: Зберігаємо відредаговані фото
-    private val saveFilteredImageDataState= MutableLiveData<SaveFilteredImageDataState>()
-    val saveFilteredImageUiState: LiveData<SaveFilteredImageDataState> get() = saveFilteredImageDataState
+    private val saveEditedImageDataState= MutableLiveData<SaveEditedImageDataState>()
+    val saveEditedImageUiState: LiveData<SaveEditedImageDataState> get() = saveEditedImageDataState
 
-    fun saveEditImage(editedBitmap: Bitmap){
+    fun saveEditImage(editedBitmap: Bitmap, textEmotions : String){
         Coroutines.io{
             runCatching{
                 emitSaveEditImageUiState(isLoading = true)
-                editImageRepository.saveEditImage(editedBitmap)
+                editImageRepository.saveEditImage(editedBitmap, textEmotions)
             }.onSuccess { savedImageUri ->
                 emitSaveEditImageUiState(uri = savedImageUri)
             }.onFailure {
@@ -112,16 +112,18 @@ class EditImageViewModel(private val editImageRepository: EditImageRepository) :
     private fun emitSaveEditImageUiState(
         isLoading: Boolean = false,
         uri: Uri? = null,
-        error: String? = null
+        error: String? = null,
+        text: String? = null
     ){
-        val dataState = SaveFilteredImageDataState(isLoading, uri, error)
-        saveFilteredImageDataState.postValue(dataState)
+        val dataState = SaveEditedImageDataState(isLoading, uri, error, text)
+        saveEditedImageDataState.postValue(dataState)
     }
 
-    data class SaveFilteredImageDataState(
+    data class SaveEditedImageDataState(
         val isLoading: Boolean,
         val uri: Uri?,
-        val error: String?
+        val error: String?,
+        val text: String?
     )
     //endregion
 

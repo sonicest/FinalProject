@@ -3,9 +3,35 @@
     <string name="saved_images">Explore</string>
     <string name="new_image">Observe</string>
     <string name="lets_text">Let\'s see how we feel today</string>
-    <string name="qtext">What are you feeling?</string>
+    <string name="qtext">What are/were you feeling?</string>
     <string name="main_text">Feel Explore Observe</string>
     <string name="appName">Feexob</string>
     <string name="apply_filter">Apply Filter</string>
     <string name="savedimages">Saved Images</string>
+    <string-array name="emotions">
+        <item/>
+        <item>Energetic</item>
+        <item>Satisfied</item>
+        <item>Valuable</item>
+        <item>Confused</item>
+        <item>Loving</item>
+        <item>Hurt</item>
+        <item>Bored</item>
+        <item>Thankful</item>
+        <item>Delightful</item>
+        <item>Lonely</item>
+        <item>Helpless</item>
+        <item>Amused</item>
+        <item>Aware</item>
+        <item>Thoughtful</item>
+        <item>Apathetic</item>
+        <item>Critical</item>
+        <item>Playful</item>
+        <item>Depressed</item>
+        <item>Relaxed</item>
+        <item>Guilty</item>
+        <item>Insecure</item>
+        <item>Creative</item>
+        <item>Cheerful</item>
+    </string-array>
 </resources>

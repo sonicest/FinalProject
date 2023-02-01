@@ -31,7 +31,8 @@ class SavedImagesRepositoryImpl (private val context: Context): SavedImagesRepos
     private fun getPreviewBitmap(file: File): Bitmap {
         val originalBitmap = BitmapFactory.decodeFile(file.absolutePath)
         val width = 150
-        val height = ((originalBitmap.height * width)/originalBitmap.width)
+        val height = 150
+       // val height = ((originalBitmap.height * width)/originalBitmap.width)
         return Bitmap.createScaledBitmap(originalBitmap, width, height, false)
     }
 }
