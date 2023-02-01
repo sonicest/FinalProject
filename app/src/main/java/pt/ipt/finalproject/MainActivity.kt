@@ -13,13 +13,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityMainBinding
+
     //Відкриття головного меню
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         //setContentView(R.layout.activity_main)
         setContentView(binding.root)
-         setListener()
+        setListener()
     }
 
     //Функція, що виконує запит користувача при нажатті на кнопки
@@ -32,17 +33,17 @@ class MainActivity : AppCompatActivity() {
 //                pickerIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 //                startActivityForResult(pickerIntent, REQUEST_CODE_PICK_IMAGE)
 //            }
-            Intent(applicationContext, CameraActivity::class.java).also{
+            Intent(applicationContext, CameraActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        binding.buttonMap.setOnClickListener {
+            Intent(applicationContext, MapTracking::class.java).also {
                 startActivity(it)
             }
         }
     }
-//        binding.buttonMap.setOnClickListener {
-//            Intent(applicationContext, SavedImagesActivity::class.java).also{
-//                startActivity(it)
-//            }
-//        }
-//}
 
     //Доступ до галереї
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
