@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/landingBackgroundEnd"
     tools:context=".ChosenPhoto">
 
     <TextView
@@ -14,7 +14,7 @@
         android:fontFamily="@font/poppins_semibold"
         android:layout_marginTop="@dimen/_15sdp"
         android:text="@string/qtext"
-        android:textColor="@color/landingBackgroundEnd"
+        android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image_preview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="@dimen/_7ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"

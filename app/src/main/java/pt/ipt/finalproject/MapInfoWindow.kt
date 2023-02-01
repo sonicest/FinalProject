@@ -5,11 +5,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_map_info_window.*
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.infowindow.InfoWindow
 import pt.ipt.finalproject.databinding.ActivityMapInfoWindowBinding
-import pt.ipt.finalproject.databinding.ActivityMapTrackingBinding
 
 class MapInfoWindow : InfoWindow {
     private var parent: MapTracking

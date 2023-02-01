@@ -1,7 +1,12 @@
 package pt.ipt.finalproject
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -21,16 +26,26 @@ import org.osmdroid.views.overlay.Polyline
 import org.osmdroid.views.overlay.compass.CompassOverlay
 import pt.ipt.finalproject.databinding.ActivityMainBinding
 import pt.ipt.finalproject.databinding.ActivityMapTrackingBinding
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.schedule
 
-class MapTracking : AppCompatActivity() {
+class MapTracking : AppCompatActivity(), LocationListener {
+
 
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 1;
+    private val LOCATION_PERMISSION_CODE = 2
+
+    private lateinit var locationManager: LocationManager
     private lateinit var map: MapView
     private lateinit var binding: ActivityMapTrackingBinding
+    private lateinit var positionll: Pair<Double, Double>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapTrackingBinding.inflate(layoutInflater)
+        positionll = Pair(0.0, 0.0)
         //setContentView(R.layout.activity_main)
         setContentView(binding.root)
         requestPermissionIfNessesary(
@@ -45,7 +60,73 @@ class MapTracking : AppCompatActivity() {
             )
         )
         //add the OpenStreetMap to activity
+        getLocation()
         showMap()
+        setListener()
+    }
+
+
+    private fun getLocation() {
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if ((ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED)
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_CODE
+            )
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0.1f, this)
+    }
+
+    override fun onLocationChanged(location: Location) {
+
+        positionll = Pair(location.latitude, location.longitude)
+
+        // tvGpsLocation = findViewById(R.id.textView)
+        // tvGpsLocation.text = "Latitude: " + location.latitude + " , Longitude: " + location.longitude
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun showPosition() {
+
+        // define the point of the map(ipt)
+        var point = GeoPoint(positionll.first, positionll.second)       // 39.60199, -8.39675
+        // var point = GeoPoint(37.421998333333335 , -122.084)
+
+        //define a marker to a point
+        var startMarker = Marker(map)
+        //assign a point to the marker
+        startMarker.position = point
+        //tell marker that the marker is there
+        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+        //define the content of infoWindow
+        startMarker.infoWindow = MapInfoWindow(map, this, "How were you feeling?")
+        //add the marker to the map
+        map.overlays.add(startMarker)
+
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            map.controller.setCenter(point)
+        }, 1000) // waits one second to center map
+
     }
 
     //add the OpenStreetMap to activity
@@ -63,51 +144,35 @@ class MapTracking : AppCompatActivity() {
         compassOverlay.enableCompass()
         map.overlays.add(compassOverlay)
 
-        //define the point of the map(ipt)
-        var point = GeoPoint(39.60068, -8.38967)       // 39.60199, -8.39675
-        //define a marker to a point
-        var startMarker = Marker(map)
-        //assign a point to the marker
-        startMarker.position = point
-        //tell marker that the marker is there
-        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-        //define the content of infoWindow
-        startMarker.infoWindow = MapInfoWindow(map, this, "IPT")
-        //add the marker to the map
-        map.overlays.add(startMarker)
 
         //defiine a second point
         //define the point of the map(ipt)
-        var point2 = GeoPoint(40.60068, -8.38967)       // 39.60199, -8.39675
-        var startMarker2 = Marker(map)
-        startMarker2.position = point2
-        startMarker2.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-        map.overlays.add(startMarker2)
-
-
-        //draw a line between the two points
-        val geoPoints = ArrayList<GeoPoint>();
-        geoPoints.add(point)
-        geoPoints.add(point2)
-        val line = Polyline()
-        line.setPoints(geoPoints);
-        line.setOnClickListener { polyline: Polyline, mapView: MapView, geoPoint: GeoPoint ->
-            Toast.makeText(
-                mapView.context,
-                "polyline with " + line.actualPoints.size + " pts was tapped",
-                Toast.LENGTH_LONG
-            ).show()
-            false
-        };
-        map.overlays.add(line);
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            map.controller.setCenter(point)
-
-        }, 1000) // waits one second to center map
+//        var point2 = GeoPoint(40.60068, -8.38967)       // 39.60199, -8.39675
+//        var startMarker2 = Marker(map)
+//        startMarker2.position = point2
+//        startMarker2.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+//        map.overlays.add(startMarker2)
+//
+//
+//        //draw a line between the two points
+//        val geoPoints = ArrayList<GeoPoint>();
+//        geoPoints.add(point)
+//        geoPoints.add(point2)
+//        val line = Polyline()
+//        line.setPoints(geoPoints);
+//        line.setOnClickListener { polyline: Polyline, mapView: MapView, geoPoint: GeoPoint ->
+//            Toast.makeText(
+//                mapView.context,
+//                "polyline with " + line.actualPoints.size + " pts was tapped",
+//                Toast.LENGTH_LONG
+//            ).show()
+//            false
+//        };
+//        map.overlays.add(line);
 
 
     }
+
 
     override fun onPause() {
         super.onPause()
@@ -117,6 +182,28 @@ class MapTracking : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         map.onResume()
+    }
+
+    private fun setListener() {
+
+        binding.myloc.setOnClickListener {
+            getLocation()
+            showPosition()
+//            var point = GeoPoint(39.60068, -8.38967)       // 39.60199, -8.39675
+//            //define a marker to a point
+//            var startMarker = Marker(map)
+//            //assign a point to the marker
+//            startMarker.position = point
+//            //tell marker that the marker is there
+//            startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+//            //define the content of infoWindow
+//            startMarker.infoWindow = MapInfoWindow(map, this, "How were you feeling?")
+//            //add the marker to the map
+//            map.overlays.add(startMarker)
+//            Intent(applicationContext, MapTracking::class.java).also {
+//                startActivity(it)
+//            }
+        }
     }
 
     //function to collect users' permission

@@ -473,29 +473,29 @@ class EditImageRepositoryImpl(private val context: Context) : EditImageRepositor
                 "Saved Images"
                 //MediaStore.Images.Media.RELATIVE_PATH, "Pictures/Saved"
             )
-            if(!mediaStorageDirectory.exists()){
+            if (!mediaStorageDirectory.exists()) {
                 mediaStorageDirectory.mkdirs()
             }
             val fileName = "IMG_${System.currentTimeMillis()}.jpg"
-           // val fileName = "IMG_${textEmotions}.jpg"
+            // val fileName = "IMG_${textEmotions}.jpg"
             val file = File(mediaStorageDirectory, fileName)
             saveFile(file, editedBitmap, textEmotions)
             FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
-        } catch (exception: Exception){
+        } catch (exception: Exception) {
             null
         }
     }
 
-    private fun saveFile(file: File, bitmap: Bitmap, text: String){
-        with(FileOutputStream(file)){
+    private fun saveFile(file: File, bitmap: Bitmap, text: String) {
+        with(FileOutputStream(file)) {
 
-          //  val canvas = Canvas(bitmap)
-           // canvas.drawBitmap(bitmap, 0f, 0f, null)
-          //  val paint = Paint()
-           // paint.setColor(Color.RED)
+            //  val canvas = Canvas(bitmap)
+            // canvas.drawBitmap(bitmap, 0f, 0f, null)
+            //  val paint = Paint()
+            // paint.setColor(Color.RED)
             //canvas.drawText(text, 0f, 0f, paint)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, this)
-          //  file.writeText(text)
+            //  file.writeText(text)
             flush()
             close()
         }
