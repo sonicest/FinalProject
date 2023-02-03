@@ -13,6 +13,17 @@
         android:scaleType="centerCrop"
         android:src="@drawable/background_image" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/acc"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:backgroundTint="@color/button_color"
+        android:layout_width="@dimen/_43sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:layout_marginEnd="@dimen/_18sdp"
+        android:src="@drawable/ic_account"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"

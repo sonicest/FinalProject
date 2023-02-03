@@ -73,7 +73,10 @@ class CameraActivity : AppCompatActivity() {
             }
         }
         binding.savedPhotos.setOnClickListener {
-            Intent(applicationContext, SavedImages::class.java).also{
+//            Intent(applicationContext, SavedImages::class.java).also{
+//                startActivity(it)
+//            }
+            Intent(applicationContext, MomentsActivity::class.java).also{
                 startActivity(it)
             }
         }
@@ -148,6 +151,10 @@ class CameraActivity : AppCompatActivity() {
                         showChosenPhoto.putExtra(KEY_IMAGE_URI, output.savedUri)
                         startActivity(showChosenPhoto)
                     }
+//                    Intent(applicationContext, CollectFeelingsActivity::class.java).also { showChosenPhoto ->
+//                        showChosenPhoto.putExtra(KEY_IMAGE_URI, output.savedUri)
+//                        startActivity(showChosenPhoto)
+//                    }
                     Log.d(TAG, msg)
                 }
             }
@@ -197,6 +204,10 @@ class CameraActivity : AppCompatActivity() {
                     showChosenPhoto.putExtra(KEY_IMAGE_URI, imageUri)
                     startActivity(showChosenPhoto)
                 }
+//                Intent(applicationContext, CollectFeelingsActivity::class.java).also { showChosenPhoto ->
+//                    showChosenPhoto.putExtra(KEY_IMAGE_URI, imageUri)
+//                    startActivity(showChosenPhoto)
+//                }
             }
         }
     }

@@ -8,6 +8,7 @@
     <string name="appName">Feexob</string>
     <string name="apply_filter">Apply Filter</string>
     <string name="savedimages">Saved Images</string>
+    <string name="empty_list">Empty List</string>
     <string-array name="emotions">
         <item />
         <item>Energetic</item>

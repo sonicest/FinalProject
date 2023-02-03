@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/landingBackgroundEnd"
+    android:background="@color/white"
     tools:context=".ChosenPhoto">
 
     <TextView
@@ -14,7 +14,7 @@
         android:fontFamily="@font/poppins_semibold"
         android:layout_marginTop="@dimen/_15sdp"
         android:text="@string/qtext"
-        android:textColor="@color/white"
+        android:textColor="@color/landingBackgroundCenter"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,6 +80,7 @@
         android:fontFamily="@font/poppins"
         android:layout_marginTop="@dimen/_40sdp"
         android:textSize="15sp"
+        android:textColor="@color/landingBackgroundCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

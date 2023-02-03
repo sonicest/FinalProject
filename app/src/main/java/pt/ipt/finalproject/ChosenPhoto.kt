@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -15,11 +16,15 @@ import jp.co.cyberagent.android.gpuimage.GPUImage
 import kotlinx.android.synthetic.main.activity_chosen_photo.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pt.ipt.finalproject.databinding.ActivityChosenPhotoBinding
+import pt.ipt.finalproject.utilities.Constant
 import pt.ipt.finalproject.utilities.displayToast
 import pt.ipt.finalproject.utilities.show
 import pt.ipt.finalproject.viewmodels.EditImageViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ChosenPhoto : AppCompatActivity() {
+
     private lateinit var fileUri: Uri
     private lateinit var binding: ActivityChosenPhotoBinding
     private val viewModel: EditImageViewModel by viewModel()
@@ -33,7 +38,11 @@ class ChosenPhoto : AppCompatActivity() {
     private lateinit var gpuImage: GPUImage
     private lateinit var originalBitmap: Bitmap
     private lateinit var textEmotions: String
-   private val filteredBitmap = MutableLiveData<Bitmap>()
+    private val filteredBitmap = MutableLiveData<Bitmap>()
+
+    private lateinit var mId: String
+    private var isUpdate = false
+    private val pickImage = 100
 
     //Гололвна функція  відтворення відредагованого фото
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +53,54 @@ class ChosenPhoto : AppCompatActivity() {
         setupObservers()
         prepareImagePreview()
         setupSpinner()
+///
+
+
+        val id = intent.getStringExtra("id")
+        if (id != null) {
+            fileUri = Uri.parse(intent.getStringExtra("imgUri"))
+            image_preview.setImageURI(fileUri)
+            inputEmotions.setText(intent.getStringExtra("description"))
+            mId = id
+            isUpdate = true
+
+            supportActionBar?.title = "Update Feelings"
+            //    btn_saveMoments.text = getString(R.string.update_now)
+        }
+//        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+//        startActivityForResult(gallery, pickImage)
+
+    }
+
+    private fun collectMoments() {
+        val description = inputEmotions.text.toString().trim()
+        if (isUriEmpty(fileUri))
+            showToast("Please select img")
+//        else if (description.isEmpty())
+//            showToast("Please try to distinguish your feelings")
+        else {
+            val date: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+//            if (isUpdate) {
+//                Constant.helper.deleteMoment(mId)
+//                Constant.helper.saveMoments(fileUri.toString(), description, date)
+//                showToast("Moments successfully updated")
+//                //startActivity<MomentsActivity>(finish = true)
+//            } else {
+            Constant.helper.saveMoments(fileUri.toString(), description, date)
+            showToast("Moment successfully saved")
+            // startActivity<MainActivity>(finish = true)
+            //    }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == pickImage) {
+            if (data != null) {
+                fileUri = data.data!!
+            }
+            image_preview.setImageURI(fileUri)
+        }
     }
 
     private fun setupSpinner() {
@@ -146,15 +203,12 @@ class ChosenPhoto : AppCompatActivity() {
         binding.save.setOnClickListener {
             // filteredBitmap.value?.let{bitmap->
             if (inputEmotions.isEmpty()) {
-                Toast.makeText(
-                    applicationContext,
-                    "Please try to distinguish your feelings",
-                    Toast.LENGTH_SHORT
-                ).show()
+                showToast("Please try to distinguish your feelings")
             } else
-                originalBitmap?.let { bitmap ->
-                    viewModel.saveEditImage(bitmap, textEmotions)
-                }
+                collectMoments()
+            originalBitmap?.let { bitmap ->
+                viewModel.saveEditImage(bitmap, textEmotions)
+            }
 
         }
     }
@@ -164,6 +218,18 @@ class ChosenPhoto : AppCompatActivity() {
         val msg: String = etMessage.text.toString()
         //check if the EditText have values or not
         return msg.trim().isEmpty()
+    }
+
+    private fun showToast(s: String) {
+        Toast.makeText(
+            applicationContext,
+            s,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun isUriEmpty(uri: Uri?): Boolean {
+        return uri == null || uri == Uri.EMPTY
     }
 }
 
