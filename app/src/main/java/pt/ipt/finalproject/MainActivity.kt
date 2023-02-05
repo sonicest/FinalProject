@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import pt.ipt.finalproject.databinding.ActivityMainBinding
 import pt.ipt.finalproject.utilities.Constant
 
@@ -20,13 +21,16 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+
     //Main page
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appContext = applicationContext
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        //val uid = intent.getStringExtra("USER")
+        val email = UserAuthentication.userInfo
+        Log.d("ID", email)
         setListener()
     }
 

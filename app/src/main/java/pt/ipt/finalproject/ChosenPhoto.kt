@@ -18,7 +18,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import kotlinx.android.synthetic.main.activity_chosen_photo.*
@@ -115,7 +114,8 @@ class ChosenPhoto : AppCompatActivity(), LocationListener {
                 fileUri.toString(),
                 description,
                 date,
-                positionll.toString()
+                positionll.toString(),
+
             )
             displayToast("Moment successfully saved")
             originalBitmap?.let { bitmap ->
@@ -227,6 +227,7 @@ class ChosenPhoto : AppCompatActivity(), LocationListener {
             }
         }
         binding.save.setOnClickListener {
+            getLocation()
             Handler(Looper.getMainLooper()).postDelayed({
                 //   locationManager.removeUpdates(this)
                 collectMoments()

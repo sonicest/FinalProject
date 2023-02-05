@@ -1,21 +1,27 @@
 package pt.ipt.finalproject.adapters
 
+import android.content.Context
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.net.Uri
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import pt.ipt.finalproject.CameraActivity
 import pt.ipt.finalproject.MapTracking
 import pt.ipt.finalproject.R
-import pt.ipt.finalproject.databinding.ActivityMainBinding
 import pt.ipt.finalproject.models.Moment
+import pt.ipt.finalproject.utilities.Constant
+import pt.ipt.finalproject.utilities.displayToast
+
 
 class MomentsAdapter(private var list: ArrayList<Moment>) :
     RecyclerView.Adapter<MomentsAdapter.MyViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view =
@@ -39,6 +45,11 @@ class MomentsAdapter(private var list: ArrayList<Moment>) :
             tvDescription.text = description
             tvDate.text = date
 
+            but.setOnClickListener{
+                Constant.helper.deleteMoment(id)
+                val intent = Intent(cxt, CameraActivity::class.java)
+                cxt.startActivity(intent)
+            }
             view.setOnClickListener {
                 val intent = Intent(cxt, MapTracking::class.java)
                 //   intent.putExtra("id", id)
@@ -60,6 +71,7 @@ class MomentsAdapter(private var list: ArrayList<Moment>) :
         val tvDescription: TextView = itemView.findViewById(R.id.img_desc)
         val tvDate: TextView = itemView.findViewById(R.id.img_date)
         val ivImg: ImageView = itemView.findViewById(R.id.sv_img)
+        val but: View = itemView.findViewById(R.id.delet)
         val view = itemView
     }
 }

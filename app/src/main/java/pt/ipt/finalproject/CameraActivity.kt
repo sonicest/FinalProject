@@ -163,8 +163,6 @@ class CameraActivity : AppCompatActivity() {
                 }
             imageCapture = ImageCapture.Builder().build()
 
-            // Select back camera as a defaul
-
             try {
                 // Unbind use cases before rebinding
                 cameraProvider.unbindAll()

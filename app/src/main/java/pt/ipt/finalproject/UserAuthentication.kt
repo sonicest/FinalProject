@@ -3,12 +3,14 @@ package pt.ipt.finalproject
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_user_authentication.*
 import pt.ipt.finalproject.database.DatabaseHelper
+import pt.ipt.finalproject.models.Moment
 import pt.ipt.finalproject.utilities.Constant.Companion.IS_LOGGED_KEY
 import pt.ipt.finalproject.utilities.Constant.Companion.helper
 import pt.ipt.finalproject.utilities.Constant.Companion.sharedPreferences
@@ -17,6 +19,9 @@ import pt.ipt.finalproject.utilities.displayToast
 
 class UserAuthentication : AppCompatActivity() {
     private var isRegister = false
+    companion object {
+        var userInfo = ""
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +53,11 @@ class UserAuthentication : AppCompatActivity() {
                         helper.registerUser(email, psw)
                         displayToast("Successfully register")
                         Intent(applicationContext, MainActivity::class.java).also {
+                            userInfo = getUserId(email, psw)
+                            Log.d("email", userInfo!!)
+//                            val q = getUserId(email, psw)
+//                            intent.putExtra("USER", email);
+//                            Log.d("B ID",q.toString() )
                             startActivity(it)
                         }
                         editor.putBoolean(IS_LOGGED_KEY, true)
@@ -58,6 +68,11 @@ class UserAuthentication : AppCompatActivity() {
                     if (res) {
                         displayToast("Successfully Logged")
                         Intent(applicationContext, MainActivity::class.java).also {
+                            userInfo = getUserId(email, psw)
+                            Log.d("email", userInfo!!)
+//                            val q = getUserId(email, psw)
+//                            intent.putExtra("USER", email);
+//                            Log.d("B ID",email)
                             startActivity(it)
                         }
                         editor.putBoolean(IS_LOGGED_KEY, true)
@@ -97,5 +112,28 @@ class UserAuthentication : AppCompatActivity() {
         return isUser
     }
 
-
+    fun getUserId(email: String, psw: String): String {
+        val list: ArrayList<Moment> = ArrayList()
+        val selectQuery = "SELECT * FROM ${DatabaseHelper.TABLE_USERS} WHERE ${DatabaseHelper.USER_EMAIL}=? AND ${DatabaseHelper.USER_PSW}=?"
+        var id = ""
+        val db: SQLiteDatabase = helper.readableDatabase
+        val cursor: Cursor?
+        cursor = db.rawQuery(selectQuery,  arrayOf(email, psw))
+        db.execSQL(selectQuery)
+//        try {
+//            cursor = db.rawQuery(selectQuery, null)
+//        } catch (e: SQLiteException) {
+//            db.execSQL(selectQuery)
+////            val i = ArrayList.
+////            return
+//        }
+        if (cursor.moveToFirst()) {
+            do {
+                id = cursor.getString(0)
+                val imgUri = cursor.getString(1)
+                val description = cursor.getString(2)
+            } while (cursor.moveToNext())
+        }
+        return id
+    }
 }

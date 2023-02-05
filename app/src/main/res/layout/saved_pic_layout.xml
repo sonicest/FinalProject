@@ -38,6 +38,16 @@
             app:layout_constraintStart_toEndOf="@+id/sv_img"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/delet"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="132dp"
+            android:layout_marginTop="120dp"
+            android:src="@drawable/ic_baseline_delete_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/img_date"
             android:layout_width="wrap_content"

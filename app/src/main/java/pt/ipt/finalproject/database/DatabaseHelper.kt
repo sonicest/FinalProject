@@ -15,7 +15,7 @@ class DatabaseHelper(context: Context) :
 
 
     private val qryMoments =
-        ("CREATE TABLE $TABLE_MOMENTS ($ID INTEGER PRIMARY KEY, $IMG_URI TEXT , $DESCRIPTION TEXT, $DATE TEXT, $LOCATION TEXT)")
+        ("CREATE TABLE $TABLE_MOMENTS ($ID INTEGER PRIMARY KEY, $IMG_URI TEXT , $DESCRIPTION TEXT, $DATE TEXT, $LOCATION TEXT, $USER_ID INTEGER FOREIGN KEY)")
     private val qryUser =
         ("CREATE TABLE $TABLE_USERS ($USER_ID INTEGER PRIMARY KEY, $USER_EMAIL TEXT , $USER_PSW TEXT)")
 
@@ -36,6 +36,7 @@ class DatabaseHelper(context: Context) :
         values.put(DESCRIPTION, description)
         values.put(DATE, date)
         values.put(LOCATION, location)
+       // values.put(USER_ID, id)
 
         val db = this.writableDatabase
         val res = db.insert(TABLE_MOMENTS, null, values)
@@ -74,8 +75,9 @@ class DatabaseHelper(context: Context) :
                 val imgUri = cursor.getString(1)
                 val description = cursor.getString(2)
                 val date = cursor.getString(3)
-                 val location = cursor.getString(4)
-                val moment = Moment(id, imgUri, description, date, location)
+                val location = cursor.getString(4)
+//                val userId = cursor.getString(5)
+                val moment = Moment(id, imgUri, description, date, location)//, user_id)
                 list.add(moment)
             } while (cursor.moveToNext())
         }
