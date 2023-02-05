@@ -11,6 +11,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -34,7 +35,7 @@ class MapTracking : AppCompatActivity(), LocationListener {
     private lateinit var locationManager: LocationManager
     private lateinit var map: MapView
     private lateinit var binding: ActivityMapTrackingBinding
-    private lateinit var positionll: Pair<Double, Double>
+    private lateinit var positionll: Pair<Double?, Double?>
     private lateinit var inemotions: String
     private lateinit var loc: String
     private lateinit var img: String
@@ -58,10 +59,12 @@ class MapTracking : AppCompatActivity(), LocationListener {
         )
 
         loc = intent.getStringExtra("location").toString()
+        loc = loc.substring(1, loc.length - 1)
+        val pos = loc.split(",")
         inemotions = intent.getStringExtra("description").toString()
         img = intent.getStringExtra("imgUri").toString()
         date = intent.getStringExtra("date").toString()
-        positionll = Pair(0.0, 0.0)
+        positionll = Pair(pos[0].toDoubleOrNull(), pos[1].toDoubleOrNull())
 
         //add the OpenStreetMap to activity
         getLocation()
@@ -146,6 +149,7 @@ class MapTracking : AppCompatActivity(), LocationListener {
     override fun onPause() {
         super.onPause()
         map.onPause()
+        locationManager.removeUpdates(this)
     }
 
     override fun onResume() {
@@ -160,7 +164,7 @@ class MapTracking : AppCompatActivity(), LocationListener {
                     map.overlays.remove(it)
                 }
             }
-            var point = GeoPoint(positionll.first, positionll.second)
+            var point = GeoPoint(positionll.first!!, positionll.second!!)
             var yourMarker = Marker(map)
             yourMarker.id = "last"
             yourMarker.position = point

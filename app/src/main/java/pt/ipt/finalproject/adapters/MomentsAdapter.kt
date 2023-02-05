@@ -33,7 +33,7 @@ class MomentsAdapter(private var list: ArrayList<Moment>) :
             val imgUri = pos.ImgUri
             val description = pos.description
             val date = pos.date
-            //val location = pos.location
+            val location = pos.location
 
             ivImg.setImageURI(Uri.parse(imgUri))
             tvDescription.text = description
@@ -45,7 +45,7 @@ class MomentsAdapter(private var list: ArrayList<Moment>) :
                 intent.putExtra("imgUri", imgUri)
                 intent.putExtra("description", description)
                 intent.putExtra("date", date)
-                intent.putExtra("location", "39.598851380869746, -8.391537079587579")
+                intent.putExtra("location", location)
                 cxt.startActivity(intent)
             }
         }

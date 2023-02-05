@@ -74,8 +74,8 @@ class DatabaseHelper(context: Context) :
                 val imgUri = cursor.getString(1)
                 val description = cursor.getString(2)
                 val date = cursor.getString(3)
-                // val location = cursor.getString(4)
-                val moment = Moment(id, imgUri, description, date)//, location)
+                 val location = cursor.getString(4)
+                val moment = Moment(id, imgUri, description, date, location)
                 list.add(moment)
             } while (cursor.moveToNext())
         }
@@ -84,7 +84,7 @@ class DatabaseHelper(context: Context) :
 
 
     companion object {
-        private const val DATABASE_NAME = "feexob_db"
+        private const val DATABASE_NAME = "peenox_db"
         private const val DATABASE_VERSION = 1
         const val TABLE_MOMENTS = "tbl_moments"
         const val TABLE_USERS = "tbl_users"
