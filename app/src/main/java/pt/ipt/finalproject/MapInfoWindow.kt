@@ -1,10 +1,9 @@
 package pt.ipt.finalproject
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.net.toUri
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.infowindow.InfoWindow
 import pt.ipt.finalproject.databinding.ActivityMapInfoWindowBinding
@@ -12,15 +11,20 @@ import pt.ipt.finalproject.databinding.ActivityMapInfoWindowBinding
 class MapInfoWindow : InfoWindow {
     private var parent: MapTracking
     private var text: String
-    private lateinit var binding: ActivityMapInfoWindowBinding
+    private var img: String
+    private var date: String
 
     constructor(
         mapView: MapView,
         parent: MapTracking,
-        text: String
-    ) :  super(R.layout.activity_map_info_window, mapView) {
+        text: String,
+        img: String,
+        date: String
+    ) : super(R.layout.activity_map_info_window, mapView) {
         this.parent = parent
-        this.text = text
+        this.text = text.lowercase()
+        this.img = img
+        this.date = date
     }
 
     override fun onOpen(item: Any?) {
@@ -28,24 +32,26 @@ class MapInfoWindow : InfoWindow {
         closeAllInfoWindowsOn(mapView)
 
         //access to button and textView
-        val myHelloButton = mView.findViewById<Button>(R.id.hellobt)
+        val myImg = mView.findViewById<ImageView>(R.id.img)
         val myTextView = mView.findViewById<TextView>(R.id.textView)
 
         //define value to textView
-        myTextView.text = text
+        myTextView.text = date
+        myImg.setImageURI(img.toUri())
+        text.replace(", $", "");
 
         //define what happens when we click on button
-        myHelloButton.setOnClickListener {
+        myImg.setOnClickListener {
             Toast.makeText(
                 parent,
-                "Hi",
+                "You were feeling $text.",
                 Toast.LENGTH_SHORT
             ).show()
         }
 
         //when we click on the area out of marker
         mView.setOnClickListener {
-            close()
+            //close()
         }
     }
 

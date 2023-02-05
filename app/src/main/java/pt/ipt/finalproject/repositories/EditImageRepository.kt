@@ -7,5 +7,5 @@ import android.net.Uri
 interface EditImageRepository  {
     suspend fun prepareImagePreview(imageUri: Uri): Bitmap?
   //  suspend fun getImageFilters(image: Bitmap): List<ImageFilter>
-    suspend fun saveEditImage(editedBitmap: Bitmap, textEmotions: String): Uri?
+    suspend fun saveEditImage(editedBitmap: Bitmap): Uri?
 }

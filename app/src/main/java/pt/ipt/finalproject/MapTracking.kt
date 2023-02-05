@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -33,7 +34,6 @@ import pt.ipt.finalproject.databinding.ActivityMapTrackingBinding
 
 class MapTracking : AppCompatActivity(), LocationListener {
 
-
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private val LOCATION_PERMISSION_CODE = 2
 
@@ -42,18 +42,15 @@ class MapTracking : AppCompatActivity(), LocationListener {
     private lateinit var binding: ActivityMapTrackingBinding
     private lateinit var positionll: Pair<Double, Double>
     private lateinit var inemotions: String
-
+    private lateinit var loc: String
+    private lateinit var img: String
+    private lateinit var date: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         binding = ActivityMapTrackingBinding.inflate(layoutInflater)
-        positionll = Pair(0.0, 0.0)
-        inemotions = "How are you feeling?"
-
-
-        //setContentView(R.layout.activity_main)
         setContentView(binding.root)
+
         requestPermissionIfNessesary(
             arrayOf(
                 Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -65,16 +62,24 @@ class MapTracking : AppCompatActivity(), LocationListener {
                 Manifest.permission.READ_EXTERNAL_STORAGE
             )
         )
+
+        loc = intent.getStringExtra("location").toString()
+        inemotions = intent.getStringExtra("description").toString()
+        img = intent.getStringExtra("imgUri").toString()
+        date = intent.getStringExtra("date").toString()
+        positionll = Pair(0.0, 0.0)
+
         //add the OpenStreetMap to activity
+        getLocation()
         showMap()
+        showPosition()
         setListener()
-
-
     }
 
     private fun getLocation() {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if ((ContextCompat.checkSelfPermission(
+        // if ((ContextCompat.checkSelfPermission(
+        if ((ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED)
@@ -89,10 +94,7 @@ class MapTracking : AppCompatActivity(), LocationListener {
     }
 
     override fun onLocationChanged(location: Location) {
-
         positionll = Pair(location.latitude, location.longitude)
-        // tvGpsLocation = findViewById(R.id.textView)
-        // tvGpsLocation.text = "Latitude: " + location.latitude + " , Longitude: " + location.longitude
     }
 
     override fun onRequestPermissionsResult(
@@ -110,14 +112,11 @@ class MapTracking : AppCompatActivity(), LocationListener {
         }
     }
 
-    private fun showPosition() {
-
-
+    fun showPosition() {
+        val pos = loc.split(",")
         // define the point of the map(ipt)
-        var point = GeoPoint(positionll.first, positionll.second)
+        var point = GeoPoint(pos[0].toDouble(), pos[1].toDouble())
         // var point = GeoPoint(37.421998333333335 , -122.084)
-
-
         //define a marker to a point
         var startMarker = Marker(map)
         //assign a point to the marker
@@ -125,14 +124,12 @@ class MapTracking : AppCompatActivity(), LocationListener {
         //tell marker that the marker is there
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
         //define the content of infoWindow
-        startMarker.infoWindow = MapInfoWindow(map, this, inemotions)
+        startMarker.infoWindow = MapInfoWindow(map, this, inemotions, img, date)
         //add the marker to the map
         map.overlays.add(startMarker)
-
-
-        //   Handler(Looper.getMainLooper()).postDelayed({
-        map.controller.setCenter(point)
-        // }, 1000) // waits one second to center map
+        Handler(Looper.getMainLooper()).postDelayed({
+            map.controller.setCenter(point)
+        }, 1000) // waits one second to center map
 
     }
 
@@ -141,44 +138,14 @@ class MapTracking : AppCompatActivity(), LocationListener {
     private fun showMap() {
         //defines only one map in all project (using singleton pattern)
         Configuration.getInstance().userAgentValue = this.packageName
-
         map = mapp
         map.setTileSource(TileSourceFactory.MAPNIK)
         map.controller.zoomTo(17.0)
         map.zoomController.setVisibility(CustomZoomButtonsController.Visibility.ALWAYS)
-        map.setMultiTouchControls(true) // para poder fazer zoom com os dedos
-
+        map.setMultiTouchControls(true)
         var compassOverlay = CompassOverlay(this, map)
         compassOverlay.enableCompass()
         map.overlays.add(compassOverlay)
-
-
-        //defiine a second point
-        //define the point of the map(ipt)
-//        var point2 = GeoPoint(40.60068, -8.38967)       // 39.60199, -8.39675
-//        var startMarker2 = Marker(map)
-//        startMarker2.position = point2
-//        startMarker2.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-//        map.overlays.add(startMarker2)
-//
-//
-//        //draw a line between the two points
-//        val geoPoints = ArrayList<GeoPoint>();
-//        geoPoints.add(point)
-//        geoPoints.add(point2)
-//        val line = Polyline()
-//        line.setPoints(geoPoints);
-//        line.setOnClickListener { polyline: Polyline, mapView: MapView, geoPoint: GeoPoint ->
-//            Toast.makeText(
-//                mapView.context,
-//                "polyline with " + line.actualPoints.size + " pts was tapped",
-//                Toast.LENGTH_LONG
-//            ).show()
-//            false
-//        };
-//        map.overlays.add(line);
-
-
     }
 
 
@@ -193,50 +160,23 @@ class MapTracking : AppCompatActivity(), LocationListener {
     }
 
     private fun setListener() {
-
-        binding.mapp.setOnClickListener {
-            val mapEventsReceiver = MapEventsReceiverImpl()
-            val mapEventsOverlay = MapEventsOverlay(mapEventsReceiver)
-            map.overlays.add(mapEventsOverlay)
-            Log.d("point", mapEventsReceiver.selectedPoint.latitude.toString())
-        }
-
-
-
         binding.myloc.setOnClickListener {
-//            val overlaySize = map.overlays.size
-//            for (i in 0 until overlaySize) {
-//                map.overlays.removeAt(i)
-//            }
-            getLocation()
-            showPosition()
-            map
-
-
-            //   Intent(applicationContext, MapPopUp::class.java).also {
-            // startActivityForResult(it, Activity.RESULT_OK)
-//                val bundle = intent.extras
-//                val mes = bundle!!.getString("message")
-//                if (!mes.equals(null)) {
-//                    inemotions = mes.toString()
-//                } else
-//                    inemotions = ""
-            // }
-
-//            var point = GeoPoint(39.60068, -8.38967)       // 39.60199, -8.39675
-//            //define a marker to a point
-//            var startMarker = Marker(map)
-//            //assign a point to the marker
-//            startMarker.position = point
-//            //tell marker that the marker is there
-//            startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-//            //define the content of infoWindow
-//            startMarker.infoWindow = MapInfoWindow(map, this, "How were you feeling?")
-//            //add the marker to the map
-//            map.overlays.add(startMarker)
-//            Intent(applicationContext, MapTracking::class.java).also {
-//                startActivity(it)
-//            }
+            map.overlays.forEach {
+                if (it is Marker && it.id == "last") {
+                    map.overlays.remove(it)
+                }
+            }
+            var point = GeoPoint(positionll.first, positionll.second)
+            var yourMarker = Marker(map)
+            yourMarker.id = "last"
+            yourMarker.position = point
+            yourMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+            yourMarker.setIcon(resources.getDrawable(R.drawable.ic_circle))
+            //yourMarker.infoWindow = MapInfoWindow(map, this, "Your position")
+            map.overlays.add(yourMarker)
+            Handler(Looper.getMainLooper()).postDelayed({
+                map.controller.setCenter(point)
+            }, 1000)
         }
 
     }
@@ -249,7 +189,7 @@ class MapTracking : AppCompatActivity(), LocationListener {
     }
 
     //function to collect users' permission
-    private fun requestPermissionIfNessesary(permissions: Array<out String>) {
+    fun requestPermissionIfNessesary(permissions: Array<out String>) {
         val permissionsToRequest = ArrayList<String>();
         permissions.forEach { permission ->
             if (ContextCompat.checkSelfPermission(

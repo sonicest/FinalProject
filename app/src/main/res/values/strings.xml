@@ -9,6 +9,13 @@
     <string name="apply_filter">Apply Filter</string>
     <string name="savedimages">Saved Images</string>
     <string name="empty_list">Empty List</string>
+    <string name="click_here">Click here</string>
+    <string name="do_not_have_an_account">Do not have an account?</string>
+    <string name="login">Login</string>
+    <string name="enter_paa">Enter the password</string>
+    <string name="enter_the_email">Enter the email</string>
+    <string name="reg">Register</string>
+    <string name="have_acc">Already have an account</string>
     <string-array name="emotions">
         <item />
         <item>Energetic</item>

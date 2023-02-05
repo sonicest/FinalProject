@@ -9,7 +9,6 @@
     android:focusable="true"
     android:layout_marginTop="3dp"
     app:cardUseCompatPadding="true"
-    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="5dp"
     app:cardElevation="1dp">
 

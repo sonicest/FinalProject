@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".ChosenPhoto">
 
     <TextView
@@ -14,7 +13,6 @@
         android:fontFamily="@font/poppins_semibold"
         android:layout_marginTop="@dimen/_15sdp"
         android:text="@string/qtext"
-        android:textColor="@color/landingBackgroundCenter"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,10 +31,10 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image_preview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="@dimen/_7ssp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/emSpinner"
+        app:layout_constraintBottom_toTopOf="@id/save"
         android:layout_marginTop="@dimen/_45sdp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -46,7 +44,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="@dimen/_30sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_25sdp"
         android:src="@drawable/ic_save2"/>
 
 
@@ -57,7 +55,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginEnd="@dimen/_30sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_25sdp"
         android:src="@drawable/ic_share"/>
 
     <Spinner
@@ -80,7 +78,6 @@
         android:fontFamily="@font/poppins"
         android:layout_marginTop="@dimen/_40sdp"
         android:textSize="15sp"
-        android:textColor="@color/landingBackgroundCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

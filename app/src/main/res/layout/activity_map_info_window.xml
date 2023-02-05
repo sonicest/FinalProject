@@ -8,19 +8,26 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"/>
+        android:text="TextView"
+        android:textColor="@color/landingBackgroundCenter"/>
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
 
-    <Button
-        android:id="@+id/hellobt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello"/>
+<!--    <Button-->
+<!--        android:id="@+id/hellobt"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Hello"/>-->
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="@dimen/_3sdp"/>
 
 </LinearLayout>

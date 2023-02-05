@@ -17,25 +17,17 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.video.Recorder
-import androidx.camera.video.Recording
-import androidx.camera.video.VideoCapture
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import pt.ipt.finalproject.databinding.ActivityCameraBinding
-import pt.ipt.finalproject.databinding.ActivityChosenPhotoBinding
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
-    // private lateinit var binding: ActivityChosenPhotoBinding
 
     private var imageCapture: ImageCapture? = null
-    private var videoCapture: VideoCapture<Recorder>? = null
-    private var recording: Recording? = null
-
     private lateinit var cameraExecutor: ExecutorService
 
 
@@ -59,9 +51,6 @@ class CameraActivity : AppCompatActivity() {
         // Set up the listeners for take photo and video capture buttons
         binding.imageCaptureButton.setOnClickListener {
             takePhoto()
-//            Intent(applicationContext, ChosenPhoto::class.java).also{
-//                startActivity(it)
-//            }
         }
         binding.gallery.setOnClickListener {
             Intent(
@@ -73,10 +62,7 @@ class CameraActivity : AppCompatActivity() {
             }
         }
         binding.savedPhotos.setOnClickListener {
-//            Intent(applicationContext, SavedImages::class.java).also{
-//                startActivity(it)
-//            }
-            Intent(applicationContext, MomentsActivity::class.java).also{
+            Intent(applicationContext, MomentsActivity::class.java).also {
                 startActivity(it)
             }
         }
@@ -146,15 +132,10 @@ class CameraActivity : AppCompatActivity() {
                 override fun
                         onImageSaved(output: ImageCapture.OutputFileResults) {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
-                    //Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     Intent(applicationContext, ChosenPhoto::class.java).also { showChosenPhoto ->
                         showChosenPhoto.putExtra(KEY_IMAGE_URI, output.savedUri)
                         startActivity(showChosenPhoto)
                     }
-//                    Intent(applicationContext, CollectFeelingsActivity::class.java).also { showChosenPhoto ->
-//                        showChosenPhoto.putExtra(KEY_IMAGE_URI, output.savedUri)
-//                        startActivity(showChosenPhoto)
-//                    }
                     Log.d(TAG, msg)
                 }
             }
@@ -204,10 +185,6 @@ class CameraActivity : AppCompatActivity() {
                     showChosenPhoto.putExtra(KEY_IMAGE_URI, imageUri)
                     startActivity(showChosenPhoto)
                 }
-//                Intent(applicationContext, CollectFeelingsActivity::class.java).also { showChosenPhoto ->
-//                    showChosenPhoto.putExtra(KEY_IMAGE_URI, imageUri)
-//                    startActivity(showChosenPhoto)
-//                }
             }
         }
     }
@@ -229,7 +206,6 @@ class CameraActivity : AppCompatActivity() {
         private val REQUIRED_PERMISSIONS =
             mutableListOf(
                 Manifest.permission.CAMERA,
-                // Manifest.permission.RECORD_AUDIO
             ).apply {
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
                     add(Manifest.permission.WRITE_EXTERNAL_STORAGE)

@@ -6,13 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import pt.ipt.finalproject.utilities.Coroutines
-//import pt.ipt.photoredactor.data.ImageFilter
 import pt.ipt.finalproject.repositories.EditImageRepository
 
 
 class EditImageViewModel(private val editImageRepository: EditImageRepository) : ViewModel() {
 
-    //region:: Підготовка перегляду фото
+    //region:: Preview
     private val imagePreviewDataState = MutableLiveData<ImagePreviewDataState>()
     val imagePreviewUiState: LiveData<ImagePreviewDataState> get() = imagePreviewDataState
 
@@ -48,25 +47,6 @@ class EditImageViewModel(private val editImageRepository: EditImageRepository) :
         val error: String?
     )
 
-    //endregion
-
-//    region:: Завантажуємо фільтри
-//    private val imageFiltersDataState = MutableLiveData<ImageFiltersDataState>()
-//    val imageFiltersUiState: LiveData<ImageFiltersDataState> get() = imageFiltersDataState
-//
-//    fun loadImageFilters(originalImage: Bitmap) {
-//        Coroutines.io {
-//            kotlin.runCatching {
-//                emitImageFiltersUiState(isLoading = true)
-//                editImageRepository.getImageFilters(getPreviewImage(originalImage))
-//            }.onSuccess { imageFilters ->
-//                emitImageFiltersUiState(imageFilters = imageFilters)
-//            }.onFailure {
-//                emitImageFiltersUiState(error = it.message.toString())
-//            }
-//        }
-//    }
-
      fun loadImage(originalImage: Bitmap): Bitmap? {
         return runCatching {
             val previewWidth = originalImage.width
@@ -75,32 +55,15 @@ class EditImageViewModel(private val editImageRepository: EditImageRepository) :
         }.getOrDefault(originalImage)
     }
 
-    /////////////
-//    private fun emitImageFiltersUiState(
-//        isLoading: Boolean = false,
-//        imageFilters: List<ImageFilter>? = null,
-//        error: String? = null
-//    ) {
-//        val dataState = ImageFiltersDataState(isLoading, imageFilters, error)
-//        imageFiltersDataState.postValue(dataState)
-//    }
-//
-//    data class ImageFiltersDataState(
-//        val isLoading: Boolean,
-//        val imageFilters: List<ImageFilter>?,
-//        val error: String?
-//    )
-    //endregion
-
-    //region:: Зберігаємо відредаговані фото
+    //region:: Saving
     private val saveEditedImageDataState= MutableLiveData<SaveEditedImageDataState>()
     val saveEditedImageUiState: LiveData<SaveEditedImageDataState> get() = saveEditedImageDataState
 
-    fun saveEditImage(editedBitmap: Bitmap, textEmotions : String){
+    fun saveEditImage(editedBitmap: Bitmap){
         Coroutines.io{
             runCatching{
                 emitSaveEditImageUiState(isLoading = true)
-                editImageRepository.saveEditImage(editedBitmap, textEmotions)
+                editImageRepository.saveEditImage(editedBitmap)
             }.onSuccess { savedImageUri ->
                 emitSaveEditImageUiState(uri = savedImageUri)
             }.onFailure {
@@ -112,18 +75,16 @@ class EditImageViewModel(private val editImageRepository: EditImageRepository) :
     private fun emitSaveEditImageUiState(
         isLoading: Boolean = false,
         uri: Uri? = null,
-        error: String? = null,
-        text: String? = null
+        error: String? = null
     ){
-        val dataState = SaveEditedImageDataState(isLoading, uri, error, text)
+        val dataState = SaveEditedImageDataState(isLoading, uri, error)
         saveEditedImageDataState.postValue(dataState)
     }
 
     data class SaveEditedImageDataState(
         val isLoading: Boolean,
         val uri: Uri?,
-        val error: String?,
-        val text: String?
+        val error: String?
     )
     //endregion
 

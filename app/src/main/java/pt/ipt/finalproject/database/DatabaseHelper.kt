@@ -7,16 +7,13 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
-import android.net.Uri
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import pt.ipt.finalproject.models.Moment
 
 class DatabaseHelper (context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
-    private val qryMoments = ("CREATE TABLE $TABLE_MOMENTS ($ID INTEGER PRIMARY KEY, $IMG_URI TEXT , $DESCRIPTION TEXT, $DATE TEXT)")
+    private val qryMoments = ("CREATE TABLE $TABLE_MOMENTS ($ID INTEGER PRIMARY KEY, $IMG_URI TEXT , $DESCRIPTION TEXT, $DATE TEXT, $LOCATION TEXT)")
     private val qryUser = ("CREATE TABLE $TABLE_USERS ($USER_ID INTEGER PRIMARY KEY, $USER_EMAIL TEXT , $USER_PSW TEXT)")
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -30,11 +27,12 @@ class DatabaseHelper (context: Context) :
         onCreate(db)
     }
 
-    fun saveMoments(imgUri: String, description: String, date: String): Boolean {
+    fun saveMoments(imgUri: String, description: String, date: String, location: String): Boolean {
         val values = ContentValues()
         values.put(IMG_URI, imgUri)
         values.put(DESCRIPTION, description)
         values.put(DATE, date)
+        values.put(LOCATION, location)
 
         val db = this.writableDatabase
         val res = db.insert(TABLE_MOMENTS, null, values)
@@ -74,22 +72,12 @@ class DatabaseHelper (context: Context) :
                 val imgUri = cursor.getString(1)
                 val description = cursor.getString(2)
                 val date = cursor.getString(3)
-                Log.d("Image uri", imgUri)
-                val moment = Moment(id, imgUri, description, date)
+               // val location = cursor.getString(4)
+                val moment = Moment(id, imgUri, description, date)//, location)
                 list.add(moment)
             } while (cursor.moveToNext())
         }
         return list
-    }
-
-    @SuppressLint("Range", "Recycle")
-    fun getUserValid(email: String, psw: String) : Boolean{
-        var isUser = false
-        val selectQuery = "SELECT * FROM $TABLE_USERS WHERE $USER_EMAIL=? AND $USER_PSW=?"
-        val db = this.readableDatabase
-        val cursor: Cursor = db.rawQuery(selectQuery, arrayOf(email,psw))
-        isUser = cursor.count <= 0
-        return isUser
     }
 
     companion object{
@@ -102,6 +90,7 @@ class DatabaseHelper (context: Context) :
         const val IMG_URI = "imgUri"
         const val DESCRIPTION = "description"
         const val DATE = "date"
+        const val LOCATION = "location"
 
         const val USER_ID = "id"
         const val USER_EMAIL = "email"

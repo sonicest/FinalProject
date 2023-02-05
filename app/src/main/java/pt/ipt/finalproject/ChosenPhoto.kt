@@ -1,17 +1,27 @@
 package pt.ipt.finalproject
 
+import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import kotlinx.android.synthetic.main.activity_chosen_photo.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,22 +33,27 @@ import pt.ipt.finalproject.viewmodels.EditImageViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ChosenPhoto : AppCompatActivity() {
+class ChosenPhoto : AppCompatActivity(), LocationListener {
+
+    private val REQUEST_PERMISSIONS_REQUEST_CODE = 1;
+    private val LOCATION_PERMISSION_CODE = 2
+    private lateinit var locationManager: LocationManager
 
     private lateinit var fileUri: Uri
     private lateinit var binding: ActivityChosenPhotoBinding
+    private lateinit var positionll: Pair<Double, Double>
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val viewModel: EditImageViewModel by viewModel()
 
     companion object {
         const val KEY_FILTERED_IMAGE_URI = "chosenImageUri"
-        //const val DEFAULT_CURRENCY_TYPE = "Choose an emotion"
     }
 
     //Бітмап фотографій
     private lateinit var gpuImage: GPUImage
     private lateinit var originalBitmap: Bitmap
     private lateinit var textEmotions: String
-    private val filteredBitmap = MutableLiveData<Bitmap>()
+
 
     private lateinit var mId: String
     private var isUpdate = false
@@ -49,13 +64,16 @@ class ChosenPhoto : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChosenPhotoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        positionll = Pair(0.0, 0.0)
+
         setListeners()
+        getLocation()
         setupObservers()
         prepareImagePreview()
         setupSpinner()
+
 ///
-
-
         val id = intent.getStringExtra("id")
         if (id != null) {
             fileUri = Uri.parse(intent.getStringExtra("imgUri"))
@@ -63,33 +81,50 @@ class ChosenPhoto : AppCompatActivity() {
             inputEmotions.setText(intent.getStringExtra("description"))
             mId = id
             isUpdate = true
-
-            supportActionBar?.title = "Update Feelings"
-            //    btn_saveMoments.text = getString(R.string.update_now)
         }
-//        val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-//        startActivityForResult(gallery, pickImage)
+    }
 
+    private fun getLocation() {
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        // if ((ContextCompat.checkSelfPermission(
+        if ((ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED)
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_CODE
+            )
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0.1f, this)
+    }
+
+    override fun onLocationChanged(location: Location) {
+        positionll = Pair(location.latitude, location.longitude)
+        Log.d("pos", positionll.toString())
     }
 
     private fun collectMoments() {
         val description = inputEmotions.text.toString().trim()
         if (isUriEmpty(fileUri))
             showToast("Please select img")
-//        else if (description.isEmpty())
-//            showToast("Please try to distinguish your feelings")
-        else {
+        else if (inputEmotions.isEmpty()) {
+            showToast("Please try to distinguish your feelings")
+        } else {
+            Log.d("Pos", positionll.toString())
             val date: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
-//            if (isUpdate) {
-//                Constant.helper.deleteMoment(mId)
-//                Constant.helper.saveMoments(fileUri.toString(), description, date)
-//                showToast("Moments successfully updated")
-//                //startActivity<MomentsActivity>(finish = true)
-//            } else {
-            Constant.helper.saveMoments(fileUri.toString(), description, date)
+            Constant.helper.saveMoments(
+                fileUri.toString(),
+                description,
+                date,
+                positionll.toString()
+            )
             showToast("Moment successfully saved")
-            // startActivity<MainActivity>(finish = true)
-            //    }
+            originalBitmap?.let { bitmap ->
+                viewModel.saveEditImage(bitmap)
+            }
         }
     }
 
@@ -132,21 +167,18 @@ class ChosenPhoto : AppCompatActivity() {
 
     private fun setupObservers() {
 
-        //Перегляд оригінального фото
+        //Showing the photo
         viewModel.imagePreviewUiState.observe(this) {
             val dataState = it ?: return@observe
             binding.previewProgressBar.visibility =
                 if (dataState.isLoading) View.VISIBLE else View.GONE
             dataState.bitmap?.let { bitmap ->
-                //Firstly filtered image=original image
                 originalBitmap = bitmap
-                filteredBitmap.value = bitmap
                 with(originalBitmap) {
                     gpuImage.setImage(this)
                     binding.imagePreview.show()
                     viewModel.loadImage(this)
                 }
-                //binding.imagePreview.setImageBitmap(bitmap)
             } ?: kotlin.run {
                 dataState.error?.let { error ->
                     displayToast(error)
@@ -154,7 +186,7 @@ class ChosenPhoto : AppCompatActivity() {
             }
         }
 
-        //Збереження відредагованого фото
+        //Saving
         viewModel.saveEditedImageUiState.observe(this) {
             val saveEditedImageDataState = it ?: return@observe
             if (saveEditedImageDataState.isLoading) {
@@ -189,8 +221,6 @@ class ChosenPhoto : AppCompatActivity() {
         }
     }
 
-
-    //Поширення фото
     private fun setListeners() {
         binding.fabShare.setOnClickListener {
             with(Intent(Intent.ACTION_SEND)) {
@@ -201,29 +231,23 @@ class ChosenPhoto : AppCompatActivity() {
             }
         }
         binding.save.setOnClickListener {
-            // filteredBitmap.value?.let{bitmap->
-            if (inputEmotions.isEmpty()) {
-                showToast("Please try to distinguish your feelings")
-            } else
+            Handler(Looper.getMainLooper()).postDelayed({
+                //   locationManager.removeUpdates(this)
                 collectMoments()
-            originalBitmap?.let { bitmap ->
-                viewModel.saveEditImage(bitmap, textEmotions)
-            }
-
+            }, 1000) // waits one second to center map
         }
     }
 
     private fun EditText.isEmpty(): Boolean {
         val etMessage = findViewById<EditText>(R.id.inputEmotions)
         val msg: String = etMessage.text.toString()
-        //check if the EditText have values or not
         return msg.trim().isEmpty()
     }
 
-    private fun showToast(s: String) {
+    private fun showToast(text: String) {
         Toast.makeText(
             applicationContext,
-            s,
+            text,
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -232,5 +256,3 @@ class ChosenPhoto : AppCompatActivity() {
         return uri == null || uri == Uri.EMPTY
     }
 }
-
-
