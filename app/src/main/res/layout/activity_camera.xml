@@ -31,18 +31,15 @@
         android:layout_marginBottom="@dimen/_40sdp"
         android:src="@drawable/ic_saved_photos"/>
 
-
-<!--    <Button-->
-<!--        android:id="@+id/image_capture_button"-->
-<!--        android:layout_width="110dp"-->
-<!--        android:layout_height="110dp"-->
-<!--        android:layout_marginEnd="50dp"-->
-<!--        android:layout_marginBottom="50dp"-->
-<!--        android:elevation="2dp"-->
-<!--        android:text="Galery"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent" />-->
-<!--&lt;!&ndash;        app:layout_constraintEnd_toStartOf="@id/vertical_centerline"&ndash;&gt;-->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/flip"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:src="@drawable/ic_flip_camera"/>
 
 
     <Button
@@ -57,13 +54,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/gallery"
         app:layout_constraintRight_toRightOf="@id/saved_photos" />
-
-<!--    <androidx.constraintlayout.widget.Guideline-->
-<!--        android:id="@+id/vertical_centerline"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical"-->
-<!--        app:layout_constraintGuide_percent=".50" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

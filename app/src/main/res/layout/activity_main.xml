@@ -13,51 +13,38 @@
         android:scaleType="centerCrop"
         android:src="@drawable/background_image" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/acc"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:backgroundTint="@color/button_color"
-        android:layout_width="@dimen/_43sdp"
-        android:layout_height="@dimen/_60sdp"
-        android:layout_marginTop="@dimen/_18sdp"
-        android:layout_marginEnd="@dimen/_18sdp"
-        android:src="@drawable/ic_account"/>
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:src="@drawable/ic_baseline_account_circle_24"/>
+
 
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/landing_background"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="-16dp" />
 
     <Button
         android:id="@+id/buttonCamera"
         android:layout_width="175dp"
         android:layout_height="92dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="50dp"
         android:backgroundTint="@color/button_color"
         android:fontFamily="@font/poppins"
         android:includeFontPadding="false"
-        app:cornerRadius="@dimen/_30sdp"
         android:text="@string/new_image"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/buttonMap"
-        android:layout_width="175dp"
-        android:layout_height="92dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/button_color"
-        android:fontFamily="@font/poppins"
-        android:includeFontPadding="false"
         app:cornerRadius="@dimen/_30sdp"
-        android:text="@string/saved_images"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcoming_text" />
 
     <TextView
         android:id="@+id/welcoming_text"
@@ -65,14 +52,13 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/lets_text"
-        android:textColor="@color/white"
+        android:textColor="@color/button_color"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appName"
-        app:layout_constraintVertical_bias="0.787" />
+        app:layout_constraintVertical_bias="0.74" />
 
     <TextView
         android:id="@+id/welcoming_text2"

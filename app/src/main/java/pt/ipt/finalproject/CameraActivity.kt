@@ -29,7 +29,7 @@ class CameraActivity : AppCompatActivity() {
 
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
-
+    private var cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +65,13 @@ class CameraActivity : AppCompatActivity() {
             Intent(applicationContext, MomentsActivity::class.java).also {
                 startActivity(it)
             }
+        }
+        binding.flip.setOnClickListener {
+            if (cameraSelector == CameraSelector.DEFAULT_FRONT_CAMERA) cameraSelector =
+                CameraSelector.DEFAULT_BACK_CAMERA
+            else if (cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) cameraSelector =
+                CameraSelector.DEFAULT_FRONT_CAMERA
+            startCamera()
         }
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
@@ -142,7 +149,6 @@ class CameraActivity : AppCompatActivity() {
         )
     }
 
-
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
         cameraProviderFuture.addListener({
@@ -158,21 +164,17 @@ class CameraActivity : AppCompatActivity() {
             imageCapture = ImageCapture.Builder().build()
 
             // Select back camera as a defaul
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
             try {
                 // Unbind use cases before rebinding
                 cameraProvider.unbindAll()
-
                 // Bind use cases to camera
                 cameraProvider.bindToLifecycle(
                     this, cameraSelector, preview, imageCapture
                 )
-
             } catch (exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
             }
-
         }, ContextCompat.getMainExecutor(this))
     }
 

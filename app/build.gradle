@@ -39,10 +39,6 @@ android {
 dependencies {
 
 
-    implementation 'com.karumi:dexter:6.2.3'
-    implementation 'com.google.android.gms:play-services-location:21.0.1'
-
-
     //camera
     def camerax_version = "1.1.0-beta01"
     implementation "androidx.camera:camera-core:1.2.1"
@@ -58,8 +54,6 @@ dependencies {
     implementation 'org.osmdroid:osmdroid-mapsforge:6.1.14'
     implementation 'org.osmdroid:osmdroid-geopackage:6.1.14'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
-
-   // implementation 'com.google.android.gms:play-services-location:21.0.1'
 
 
     implementation 'androidx.core:core-ktx:1.9.0'

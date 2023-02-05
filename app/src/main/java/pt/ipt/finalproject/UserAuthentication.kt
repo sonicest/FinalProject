@@ -80,7 +80,6 @@ class UserAuthentication : AppCompatActivity() {
                 btn_login.text = getString(R.string.reg)
                 tv_statusLabel.text = getString(R.string.have_acc)
             }
-            displayToast(isRegister.toString())
         }
     }
 

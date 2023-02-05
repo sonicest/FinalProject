@@ -4,14 +4,11 @@
     <!-- recourses to access the app -->
     <uses-feature android:name="android.hardware.camera.any" />
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission
@@ -59,13 +56,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MapPopUp"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".MapInfoWindow"
             android:exported="false">
             <meta-data
@@ -80,19 +70,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".SavedImages"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity> <!-- <activity -->
-        <!-- android:name="layout.item_container_saved_images" -->
-        <!-- android:exported="false"> -->
-        <!-- <meta-data -->
-        <!-- android:name="android.app.lib_name" -->
-        <!-- android:value="" /> -->
-        <!-- </activity> -->
-        <activity
             android:name=".ChosenPhoto"
             android:exported="false">
             <meta-data
@@ -101,8 +78,7 @@
         </activity>
         <activity
             android:name=".CameraActivity"
-            android:exported="false"
-            android:theme="@style/FullScreen">
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

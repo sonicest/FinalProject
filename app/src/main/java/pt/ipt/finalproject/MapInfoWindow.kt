@@ -51,11 +51,11 @@ class MapInfoWindow : InfoWindow {
 
         //when we click on the area out of marker
         mView.setOnClickListener {
-            //close()
+            close()
         }
     }
 
     override fun onClose() {
-        TODO("Not yet implemented")
+        closeAllInfoWindowsOn(mapView)
     }
 }

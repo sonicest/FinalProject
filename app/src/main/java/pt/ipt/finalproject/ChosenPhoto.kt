@@ -20,8 +20,6 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import kotlinx.android.synthetic.main.activity_chosen_photo.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -42,7 +40,6 @@ class ChosenPhoto : AppCompatActivity(), LocationListener {
     private lateinit var fileUri: Uri
     private lateinit var binding: ActivityChosenPhotoBinding
     private lateinit var positionll: Pair<Double, Double>
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val viewModel: EditImageViewModel by viewModel()
 
     companion object {
@@ -64,7 +61,6 @@ class ChosenPhoto : AppCompatActivity(), LocationListener {
         super.onCreate(savedInstanceState)
         binding = ActivityChosenPhotoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         positionll = Pair(0.0, 0.0)
 
         setListeners()
