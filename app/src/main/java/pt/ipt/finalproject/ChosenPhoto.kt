@@ -63,8 +63,8 @@ class ChosenPhoto : AppCompatActivity(), LocationListener {
         setContentView(binding.root)
         positionll = Pair(0.0, 0.0)
 
-        setListeners()
         getLocation()
+        setListeners()
         setupObservers()
         prepareImagePreview()
         setupSpinner()
@@ -105,9 +105,9 @@ class ChosenPhoto : AppCompatActivity(), LocationListener {
     private fun collectMoments() {
         val description = inputEmotions.text.toString().trim()
         if (isUriEmpty(fileUri))
-            showToast("Please select img")
+            displayToast("Please select img")
         else if (inputEmotions.isEmpty()) {
-            showToast("Please try to distinguish your feelings")
+            displayToast("Please try to distinguish your feelings")
         } else {
             Log.d("Pos", positionll.toString())
             val date: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
@@ -117,7 +117,7 @@ class ChosenPhoto : AppCompatActivity(), LocationListener {
                 date,
                 positionll.toString()
             )
-            showToast("Moment successfully saved")
+            displayToast("Moment successfully saved")
             originalBitmap?.let { bitmap ->
                 viewModel.saveEditImage(bitmap)
             }
@@ -240,13 +240,6 @@ class ChosenPhoto : AppCompatActivity(), LocationListener {
         return msg.trim().isEmpty()
     }
 
-    private fun showToast(text: String) {
-        Toast.makeText(
-            applicationContext,
-            text,
-            Toast.LENGTH_SHORT
-        ).show()
-    }
 
     private fun isUriEmpty(uri: Uri?): Boolean {
         return uri == null || uri == Uri.EMPTY

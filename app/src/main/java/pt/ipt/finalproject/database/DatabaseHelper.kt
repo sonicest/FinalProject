@@ -10,11 +10,14 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import pt.ipt.finalproject.models.Moment
 
-class DatabaseHelper (context: Context) :
+class DatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
-    private val qryMoments = ("CREATE TABLE $TABLE_MOMENTS ($ID INTEGER PRIMARY KEY, $IMG_URI TEXT , $DESCRIPTION TEXT, $DATE TEXT, $LOCATION TEXT)")
-    private val qryUser = ("CREATE TABLE $TABLE_USERS ($USER_ID INTEGER PRIMARY KEY, $USER_EMAIL TEXT , $USER_PSW TEXT)")
+
+    private val qryMoments =
+        ("CREATE TABLE $TABLE_MOMENTS ($ID INTEGER PRIMARY KEY, $IMG_URI TEXT , $DESCRIPTION TEXT, $DATE TEXT, $LOCATION TEXT)")
+    private val qryUser =
+        ("CREATE TABLE $TABLE_USERS ($USER_ID INTEGER PRIMARY KEY, $USER_EMAIL TEXT , $USER_PSW TEXT)")
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(qryMoments)
@@ -48,21 +51,20 @@ class DatabaseHelper (context: Context) :
         val values = ContentValues()
         values.put(USER_EMAIL, email)
         values.put(USER_PSW, psw)
-
         val db = this.writableDatabase
         val res = db.insert(TABLE_USERS, null, values)
         return res != -1L
     }
 
     @SuppressLint("Range", "Recycle")
-    fun getMoments() : ArrayList<Moment>{
-        val list : ArrayList<Moment> = ArrayList()
+    fun getMoments(): ArrayList<Moment> {
+        val list: ArrayList<Moment> = ArrayList()
         val selectQuery = "SELECT * FROM $TABLE_MOMENTS"
         val db = this.readableDatabase
         val cursor: Cursor?
-        try{
+        try {
             cursor = db.rawQuery(selectQuery, null)
-        }catch (e: SQLiteException) {
+        } catch (e: SQLiteException) {
             db.execSQL(selectQuery)
             return ArrayList()
         }
@@ -72,7 +74,7 @@ class DatabaseHelper (context: Context) :
                 val imgUri = cursor.getString(1)
                 val description = cursor.getString(2)
                 val date = cursor.getString(3)
-               // val location = cursor.getString(4)
+                // val location = cursor.getString(4)
                 val moment = Moment(id, imgUri, description, date)//, location)
                 list.add(moment)
             } while (cursor.moveToNext())
@@ -80,7 +82,8 @@ class DatabaseHelper (context: Context) :
         return list
     }
 
-    companion object{
+
+    companion object {
         private const val DATABASE_NAME = "feexob_db"
         private const val DATABASE_VERSION = 1
         const val TABLE_MOMENTS = "tbl_moments"

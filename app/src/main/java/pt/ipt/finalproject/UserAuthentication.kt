@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import kotlinx.android.synthetic.main.activity_user_authentication.*
 import pt.ipt.finalproject.database.DatabaseHelper
 import pt.ipt.finalproject.utilities.Constant.Companion.IS_LOGGED_KEY
