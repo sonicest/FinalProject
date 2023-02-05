@@ -19,9 +19,9 @@ import pt.ipt.finalproject.utilities.displayToast
 
 class UserAuthentication : AppCompatActivity() {
     private var isRegister = false
-    companion object {
-        var userInfo = ""
-    }
+//    companion object {
+//        var userInfo = ""
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,11 +53,7 @@ class UserAuthentication : AppCompatActivity() {
                         helper.registerUser(email, psw)
                         displayToast("Successfully register")
                         Intent(applicationContext, MainActivity::class.java).also {
-                            userInfo = getUserId(email, psw)
-                            Log.d("email", userInfo!!)
-//                            val q = getUserId(email, psw)
-//                            intent.putExtra("USER", email);
-//                            Log.d("B ID",q.toString() )
+                            // userInfo = getUserId(email, psw)
                             startActivity(it)
                         }
                         editor.putBoolean(IS_LOGGED_KEY, true)
@@ -68,11 +64,7 @@ class UserAuthentication : AppCompatActivity() {
                     if (res) {
                         displayToast("Successfully Logged")
                         Intent(applicationContext, MainActivity::class.java).also {
-                            userInfo = getUserId(email, psw)
-                            Log.d("email", userInfo!!)
-//                            val q = getUserId(email, psw)
-//                            intent.putExtra("USER", email);
-//                            Log.d("B ID",email)
+                            //    userInfo = getUserId(email, psw)
                             startActivity(it)
                         }
                         editor.putBoolean(IS_LOGGED_KEY, true)
@@ -112,28 +104,21 @@ class UserAuthentication : AppCompatActivity() {
         return isUser
     }
 
-    fun getUserId(email: String, psw: String): String {
-        val list: ArrayList<Moment> = ArrayList()
-        val selectQuery = "SELECT * FROM ${DatabaseHelper.TABLE_USERS} WHERE ${DatabaseHelper.USER_EMAIL}=? AND ${DatabaseHelper.USER_PSW}=?"
-        var id = ""
-        val db: SQLiteDatabase = helper.readableDatabase
-        val cursor: Cursor?
-        cursor = db.rawQuery(selectQuery,  arrayOf(email, psw))
-        db.execSQL(selectQuery)
-//        try {
-//            cursor = db.rawQuery(selectQuery, null)
-//        } catch (e: SQLiteException) {
-//            db.execSQL(selectQuery)
-////            val i = ArrayList.
-////            return
+//    fun getUserId(email: String, psw: String): String {
+//        val list: ArrayList<Moment> = ArrayList()
+//        val selectQuery = "SELECT * FROM ${DatabaseHelper.TABLE_USERS} WHERE ${DatabaseHelper.USER_EMAIL}=? AND ${DatabaseHelper.USER_PSW}=?"
+//        var id = ""
+//        val db: SQLiteDatabase = helper.readableDatabase
+//        val cursor: Cursor?
+//        cursor = db.rawQuery(selectQuery,  arrayOf(email, psw))
+//        db.execSQL(selectQuery)
+//        if (cursor.moveToFirst()) {
+//            do {
+//                id = cursor.getString(0)
+//                val imgUri = cursor.getString(1)
+//                val description = cursor.getString(2)
+//            } while (cursor.moveToNext())
 //        }
-        if (cursor.moveToFirst()) {
-            do {
-                id = cursor.getString(0)
-                val imgUri = cursor.getString(1)
-                val description = cursor.getString(2)
-            } while (cursor.moveToNext())
-        }
-        return id
-    }
+//        return id
+//    }
 }

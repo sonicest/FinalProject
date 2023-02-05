@@ -15,7 +15,7 @@ class DatabaseHelper(context: Context) :
 
 
     private val qryMoments =
-        ("CREATE TABLE $TABLE_MOMENTS ($ID INTEGER PRIMARY KEY, $IMG_URI TEXT , $DESCRIPTION TEXT, $DATE TEXT, $LOCATION TEXT, $USER_ID INTEGER FOREIGN KEY)")
+        ("CREATE TABLE $TABLE_MOMENTS ($ID INTEGER PRIMARY KEY, $IMG_URI TEXT , $DESCRIPTION TEXT, $DATE TEXT, $LOCATION TEXT)")//, $USERID INTEGER FOREIGN KEY)")
     private val qryUser =
         ("CREATE TABLE $TABLE_USERS ($USER_ID INTEGER PRIMARY KEY, $USER_EMAIL TEXT , $USER_PSW TEXT)")
 
@@ -30,13 +30,19 @@ class DatabaseHelper(context: Context) :
         onCreate(db)
     }
 
-    fun saveMoments(imgUri: String, description: String, date: String, location: String): Boolean {
+    fun saveMoments(
+        imgUri: String,
+        description: String,
+        date: String,
+        location: String,
+       // id: String
+    ): Boolean {
         val values = ContentValues()
         values.put(IMG_URI, imgUri)
         values.put(DESCRIPTION, description)
         values.put(DATE, date)
         values.put(LOCATION, location)
-       // values.put(USER_ID, id)
+        //     values.put(USERID, id)
 
         val db = this.writableDatabase
         val res = db.insert(TABLE_MOMENTS, null, values)
@@ -60,7 +66,8 @@ class DatabaseHelper(context: Context) :
     @SuppressLint("Range", "Recycle")
     fun getMoments(): ArrayList<Moment> {
         val list: ArrayList<Moment> = ArrayList()
-        val selectQuery = "SELECT * FROM $TABLE_MOMENTS"
+        val selectQuery =
+            "SELECT * FROM $TABLE_MOMENTS"//WHERE ${USERID}=UserAuthentication.userInfo "
         val db = this.readableDatabase
         val cursor: Cursor?
         try {
@@ -76,8 +83,8 @@ class DatabaseHelper(context: Context) :
                 val description = cursor.getString(2)
                 val date = cursor.getString(3)
                 val location = cursor.getString(4)
-//                val userId = cursor.getString(5)
-                val moment = Moment(id, imgUri, description, date, location)//, user_id)
+               // val userId = cursor.getString(5)
+                val moment = Moment(id, imgUri, description, date, location)//, userId)
                 list.add(moment)
             } while (cursor.moveToNext())
         }
@@ -96,6 +103,7 @@ class DatabaseHelper(context: Context) :
         const val DESCRIPTION = "description"
         const val DATE = "date"
         const val LOCATION = "location"
+        const val USERID = "userId"
 
         const val USER_ID = "id"
         const val USER_EMAIL = "email"

@@ -19,6 +19,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import kotlinx.android.synthetic.main.activity_chosen_photo.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -68,7 +69,6 @@ class ChosenPhoto : AppCompatActivity(), LocationListener {
         prepareImagePreview()
         setupSpinner()
 
-///
         val id = intent.getStringExtra("id")
         if (id != null) {
             fileUri = Uri.parse(intent.getStringExtra("imgUri"))
@@ -109,13 +109,15 @@ class ChosenPhoto : AppCompatActivity(), LocationListener {
             displayToast("Please try to distinguish your feelings")
         } else {
             Log.d("Pos", positionll.toString())
+//            val id = UserAuthentication.userInfo
+//            Log.d("ID", id)
             val date: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
             Constant.helper.saveMoments(
                 fileUri.toString(),
                 description,
                 date,
                 positionll.toString(),
-
+                //id
             )
             displayToast("Moment successfully saved")
             originalBitmap?.let { bitmap ->
@@ -241,8 +243,8 @@ class ChosenPhoto : AppCompatActivity(), LocationListener {
         return msg.trim().isEmpty()
     }
 
-
     private fun isUriEmpty(uri: Uri?): Boolean {
         return uri == null || uri == Uri.EMPTY
     }
+
 }

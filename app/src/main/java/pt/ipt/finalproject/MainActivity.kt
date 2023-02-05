@@ -1,19 +1,25 @@
 package pt.ipt.finalproject
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import pt.ipt.finalproject.databinding.ActivityMainBinding
 import pt.ipt.finalproject.utilities.Constant
+import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
     companion object {
         private const val REQUEST_CODE_PICK_IMAGE = 1
+        private val REQUEST_PERMISSIONS_REQUEST_CODE = 1
         const val KEY_IMAGE_URI = "imageUri"
         var appContext: Context? = null
             private set
@@ -28,10 +34,19 @@ class MainActivity : AppCompatActivity() {
         appContext = applicationContext
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //val uid = intent.getStringExtra("USER")
-        val email = UserAuthentication.userInfo
-        Log.d("ID", email)
         setListener()
+
+        requestPermissionIfNessesary(
+            arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.INTERNET,
+                Manifest.permission.ACCESS_NETWORK_STATE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        )
     }
 
     val positiveButtonClick = { dialog: DialogInterface, which: Int ->
@@ -84,6 +99,27 @@ class MainActivity : AppCompatActivity() {
                 "Instituto Politecnico de Tomar\nEngenharia Informatica\nDesenvolvimento de Aplicacoes Movies\nAlunos: 25153, 21075",
                 false,
                 "OK"
+            )
+        }
+    }
+
+    fun requestPermissionIfNessesary(permissions: Array<out String>) {
+        val permissionsToRequest = ArrayList<String>();
+        permissions.forEach { permission ->
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // Permission is not granted
+                permissionsToRequest.add(permission);
+            }
+        }
+        if (permissionsToRequest.size > 0) {
+            ActivityCompat.requestPermissions(
+                this,
+                permissionsToRequest.toArray(arrayOf<String>()),
+                REQUEST_PERMISSIONS_REQUEST_CODE
             )
         }
     }

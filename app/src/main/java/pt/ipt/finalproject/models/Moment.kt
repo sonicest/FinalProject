@@ -6,5 +6,5 @@ data class Moment(
     val description: String,
     val date: String,
     val location: String
-   // val userId: String
+    //val userId: String
 )
