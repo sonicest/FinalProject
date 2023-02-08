@@ -11,6 +11,7 @@ import pt.ipt.finalproject.dependencyinjection.viewModelModule
 class AppConfig : Application() {
     override fun onCreate(){
         super.onCreate()
+        //getting the application context to the activities
         appContext = applicationContext
         startKoin{
             androidContext(this@AppConfig)

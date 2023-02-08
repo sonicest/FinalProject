@@ -1,5 +1,5 @@
 package pt.ipt.finalproject.models
-
+// where i save the strings
 data class Moment(
     val id: String,
     val ImgUri: String,

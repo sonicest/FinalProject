@@ -26,9 +26,10 @@ class UserAuthentication : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_authentication)
-        supportActionBar?.hide()
+        supportActionBar?.hide() //dont show the app bar on the top
 
         btn_login.setOnClickListener {
+            //what the user its inputing
             val email = et_email.text.toString().trim()
             val psw = et_psw.text.toString().trim()
 

@@ -17,14 +17,16 @@ class MomentsActivity : AppCompatActivity() {
 
         supportActionBar?.title = "Moments"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+//geting the moments from the database function and showing in the reclying by adpater
         adapter = MomentsAdapter(helper.getMoments())
         if (adapter.itemCount > 0) {
             rv_list.layoutManager = LinearLayoutManager(this@MomentsActivity)
             rv_list.visibility = View.VISIBLE
             rv_list.adapter = adapter
             tv_list.visibility = View.GONE
-        } else {
+        }
+        // if there is no items saved will appear a text empty list
+        else {
             rv_list.visibility = View.GONE
             tv_list.visibility = View.VISIBLE
             tv_list.text = getString(R.string.empty_list)

@@ -46,6 +46,7 @@ class MapTracking : AppCompatActivity(), LocationListener {
         binding = ActivityMapTrackingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //asking for the permission in case it ws not granted on the main activity
         requestPermissionIfNessesary(
             arrayOf(
                 Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -72,6 +73,7 @@ class MapTracking : AppCompatActivity(), LocationListener {
         setListener()
     }
 
+    //permissions for getting the location
     private fun getLocation() {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         // if ((ContextCompat.checkSelfPermission(
@@ -89,6 +91,7 @@ class MapTracking : AppCompatActivity(), LocationListener {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0.1f, this)
     }
 
+    //the function is called when the location is changed
     override fun onLocationChanged(location: Location) {
         positionll = Pair(location.latitude, location.longitude)
         Log.d("pic position", positionll.toString())
@@ -109,6 +112,7 @@ class MapTracking : AppCompatActivity(), LocationListener {
         }
     }
 
+    //getting the location of photo from the db and showing the marker
     fun showPosition() {
         val pos = loc.split(",")
         // define the point of the map(ipt)
@@ -157,6 +161,7 @@ class MapTracking : AppCompatActivity(), LocationListener {
         map.onResume()
     }
 
+    //distinguishing the current location
     private fun setListener() {
         binding.myloc.setOnClickListener {
             getLocation()

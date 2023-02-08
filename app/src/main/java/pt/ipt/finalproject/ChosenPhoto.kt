@@ -136,6 +136,7 @@ class ChosenPhoto : AppCompatActivity(), LocationListener {
         }
     }
 
+    //spinner for choosing the emotions
     private fun setupSpinner() {
         ArrayAdapter.createFromResource(
             this,
@@ -163,9 +164,9 @@ class ChosenPhoto : AppCompatActivity(), LocationListener {
         }
     }
 
+    //part of these code was taken from the https://www.youtube.com/watch?v=dtlZENmOzp4&list=PLam6bY5NszYOGk7-8S9F3K4YpjLt2nKv8
     private fun setupObservers() {
-
-        //Showing the photo
+        //showing the photo for the preview
         viewModel.imagePreviewUiState.observe(this) {
             val dataState = it ?: return@observe
             binding.previewProgressBar.visibility =

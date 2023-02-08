@@ -17,12 +17,13 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         Handler(Looper.getMainLooper()).postDelayed({
+            //if the user already have the login i went to the main page
             val isLogged = sharedPreferences.getBoolean(IS_LOGGED_KEY, false)
             if (isLogged)
                 Intent(applicationContext, MainActivity::class.java).also {
                     startActivity(it)
-
                 }
+            //if not enters the authe menu
             else
                 Intent(applicationContext, UserAuthentication::class.java).also {
                     startActivity(it)

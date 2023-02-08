@@ -15,6 +15,7 @@ class EditImageViewModel(private val editImageRepository: EditImageRepository) :
     private val imagePreviewDataState = MutableLiveData<ImagePreviewDataState>()
     val imagePreviewUiState: LiveData<ImagePreviewDataState> get() = imagePreviewDataState
 
+    //preparation of the preview
     fun prepareImagePreview(imageUri: Uri) {
         Coroutines.io {
             runCatching {
@@ -41,12 +42,14 @@ class EditImageViewModel(private val editImageRepository: EditImageRepository) :
         imagePreviewDataState.postValue(dataState)
     }
 
+    //state of the uploaded image
     data class ImagePreviewDataState(
         val isLoading: Boolean,
         val bitmap: Bitmap?,
         val error: String?
     )
 
+    //showing the image on the activity
      fun loadImage(originalImage: Bitmap): Bitmap? {
         return runCatching {
             val previewWidth = originalImage.width
