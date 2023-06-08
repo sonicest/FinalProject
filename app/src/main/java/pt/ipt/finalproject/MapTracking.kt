@@ -194,7 +194,7 @@ class MapTracking : AppCompatActivity(), LocationListener {
     }
 
     //function to collect users' permission
-    fun requestPermissionIfNessesary(permissions: Array<out String>) {
+    private fun requestPermissionIfNessesary(permissions: Array<out String>) {
         val permissionsToRequest = ArrayList<String>();
         permissions.forEach { permission ->
             if (ContextCompat.checkSelfPermission(

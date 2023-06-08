@@ -1,7 +1,9 @@
 package pt.ipt.finalproject
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.ContentValues
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
@@ -39,6 +41,12 @@ class CameraActivity : AppCompatActivity() {
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        basicAlert(
+            "Your task for today",
+            "Take picture or download one.\nNotice what you have felt at that time and note it down.",
+            false,
+            "Sure"
+        )
         // Request camera permissions
         if (allPermissionsGranted()) {
             startCamera()
@@ -100,6 +108,22 @@ class CameraActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+    fun basicAlert(name: String, desc: String, boolean: Boolean, button: String): Boolean {
+        val builder = AlertDialog.Builder(this, R.style.AlertDialog)
+        with(builder)
+        {
+            setTitle(name)
+            setMessage(desc)
+            setNegativeButton(button, negativeButtonClick)
+            show()
+            return false
+        }
+    }
+
+    val negativeButtonClick = { dialog: DialogInterface, which: Int ->
+        dialog.dismiss()
     }
 
     @RequiresApi(Build.VERSION_CODES.N)

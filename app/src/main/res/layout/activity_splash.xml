@@ -14,17 +14,31 @@
         android:src="@drawable/background_image" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/welcoming_text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Have a good day"
-        android:fontFamily="@font/poppins_bold"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/main_text"
+        android:textColor="@color/secondaryText"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toBottomOf="@+id/appName"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/appName"
+        android:layout_width="137dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="312dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/appName"
+        android:textColor="#E25C583E"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
+        app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

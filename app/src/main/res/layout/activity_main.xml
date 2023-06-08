@@ -38,67 +38,89 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/landing_background"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-16dp" />
+        tools:layout_editor_absoluteX="-52dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <Button
-        android:id="@+id/buttonCamera"
-        android:layout_width="175dp"
-        android:layout_height="92dp"
+        android:id="@+id/observe"
+        android:layout_width="126dp"
+        android:layout_height="139dp"
         android:layout_marginBottom="50dp"
         android:backgroundTint="@color/button_color"
         android:fontFamily="@font/poppins"
         android:includeFontPadding="false"
-        android:text="@string/new_image"
-        app:cornerRadius="@dimen/_30sdp"
+        android:text="@string/but_text1"
+        app:cornerRadius="@dimen/_60sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcoming_text" />
+        app:layout_constraintTop_toBottomOf="@+id/welcome"
+        app:layout_constraintVertical_bias="0.392" />
+
+    <Button
+        android:id="@+id/explore"
+        android:layout_width="130dp"
+        android:layout_height="142dp"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/button_color"
+        android:fontFamily="@font/poppins"
+        android:includeFontPadding="false"
+        android:text="@string/but_text2"
+        app:cornerRadius="@dimen/_60sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.185"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome"
+        app:layout_constraintVertical_bias="0.732" />
+
+    <Button
+        android:id="@+id/experience"
+        android:layout_width="128dp"
+        android:layout_height="140dp"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/button_color"
+        android:fontFamily="@font/poppins"
+        android:includeFontPadding="false"
+        android:text="@string/but_text3"
+        app:cornerRadius="@dimen/_60sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.816"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome"
+        app:layout_constraintVertical_bias="0.734" />
 
     <TextView
         android:id="@+id/welcoming_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="@string/lets_text"
-        android:textColor="@color/button_color"
+        android:fontFamily="@font/poppins"
+        android:text="@string/qa"
+        android:textColor="@color/text_color"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appName"
-        app:layout_constraintVertical_bias="0.74" />
+        app:layout_constraintTop_toBottomOf="@+id/welcome"
+        app:layout_constraintVertical_bias="0.826" />
 
     <TextView
-        android:id="@+id/welcoming_text2"
+        android:id="@+id/welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins"
-        android:text="@string/main_text"
-        android:textColor="@color/secondaryText"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appName"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/appName"
-        android:layout_width="135dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="136dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="@string/appName"
-        android:textColor="#E25C583E"
-        android:textSize="35sp"
-        app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/lets_text"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.248" />
 
-<!--    <Spinner-->
+    <!--    <Spinner-->
 <!--        android:id="@+id/sspinner"-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="wrap_content"-->

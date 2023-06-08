@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun basicAlert(name: String, desc: String, boolean: Boolean, button: String) {
-        val builder = AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this, R.style.AlertDialog)
         with(builder)
         {
             setTitle(name)
@@ -80,12 +80,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setListener() {
-        binding.buttonCamera.setOnClickListener {
+        binding.observe.setOnClickListener {
             Intent(applicationContext, CameraActivity::class.java).also {
                 startActivity(it)
             }
         }
 
+        binding.explore.setOnClickListener {
+            Intent(applicationContext, MapActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+        binding.experience.setOnClickListener {
+            Intent(applicationContext, TaskActivity::class.java).also {
+                startActivity(it)
+            }
+        }
         binding.acc.setOnClickListener {
             basicAlert(
                 "Log out",
@@ -96,7 +106,7 @@ class MainActivity : AppCompatActivity() {
         binding.info.setOnClickListener {
             basicAlert(
                 "Information",
-                "Instituto Politecnico de Tomar\nEngenharia Informatica\nDesenvolvimento de Aplicacoes Movies\nAlunos: 25153, 21075",
+                "Hi there",
                 false,
                 "OK"
             )

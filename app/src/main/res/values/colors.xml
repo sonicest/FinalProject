@@ -11,5 +11,6 @@
     <color name="buttonEditNewImage">#FFB74D</color>
     <color name="white">#FFFFFFFF</color>
     <color name="button_color">#78FDF6CF</color>
+    <color name="text_color">#FDF6CF</color>
 
 </resources>

@@ -1,0 +1,36 @@
+<resources>
+    <string-array name="image_names">
+        <item>ballet.png</item>
+        <item>bikini.png</item>
+        <item>chilling.png</item>
+        <item>coffee.png</item>
+        <item>dance.png</item>
+        <item>dancing.png</item>
+        <item>doggie.png</item>
+        <item>dogjump.png</item>
+        <item>icecream.png</item>
+        <item>jumping.png</item>
+        <item>laying.png</item>
+        <item>levitate.png</item>
+        <item>loving.png</item>
+        <item>meditating.png</item>
+        <item>messy.png</item>
+        <item>moshing.png</item>
+        <item>petting.png</item>
+        <item>plant.png</item>
+        <item>reading.png</item>
+        <item>reading-side.png</item>
+        <item>rollerskating.png</item>
+        <item>rolling.png</item>
+        <item>running.png</item>
+        <item>selfie.png</item>
+        <item>sitting.png</item>
+        <item>sittingreading.png</item>
+        <item>sleek.png</item>
+        <item>sprinting.png</item>
+        <item>strolling.png</item>
+        <item>swinging.png</item>
+        <item>unboxing.png</item>
+        <item>zombieing.png</item>
+    </string-array>
+</resources>

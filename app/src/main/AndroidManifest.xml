@@ -14,7 +14,6 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
-
     <application
         android:name=".utilities.AppConfig"
         android:allowBackup="true"
@@ -49,36 +48,57 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".TaskActivity"
+            android:exported="false"
+            android:theme="@style/FullScreen">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".MomentsActivity"
             android:exported="false">
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".MapActivity"
+            android:exported="false"
+            android:theme="@style/FullScreen">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".MapInfoWindow"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/FullScreen">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".MapTracking"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/FullScreen">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ChosenPhoto"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/FullScreen">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".CameraActivity"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/FullScreen">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

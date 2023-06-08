@@ -1,13 +1,15 @@
 <resources>
     <string name="app_name">Feexob</string>
     <string name="saved_images">Explore</string>
-    <string name="new_image">Observe</string>
+    <string name="but_text1">Observe</string>
+    <string name="but_text2">Explore</string>
+    <string name="but_text3">Experience</string>
     <string name="lets_text">Let\'s see how we feel today</string>
     <string name="qtext">How are/were you feeling?</string>
-    <string name="main_text">Feel Explore Observe</string>
+    <string name="main_text">Feel Explore Experience Observe</string>
     <string name="appName">Feexob</string>
     <string name="apply_filter">Apply Filter</string>
-    <string name="savedimages">Saved Images</string>
+    <string name="savedimages">Choose the task of your preference</string>
     <string name="empty_list">Empty List</string>
     <string name="click_here">Click here</string>
     <string name="do_not_have_an_account">Do not have an account?</string>
@@ -16,6 +18,7 @@
     <string name="enter_the_email">Enter the email</string>
     <string name="reg">Register</string>
     <string name="have_acc">Already have an account</string>
+    <string name="qa">Choose the type of a task</string>
     <string-array name="emotions">
         <item />
         <item>Energetic</item>
