@@ -18,6 +18,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.GridLayout
+import android.widget.ImageView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import jp.co.cyberagent.android.gpuimage.GPUImage
@@ -63,6 +65,7 @@ class ChosenPhoto : AppCompatActivity(), LocationListener {
         setContentView(binding.root)
         positionll = Pair(0.0, 0.0)
 
+        setupEmoji()
         getLocation()
         setListeners()
         setupObservers()
@@ -94,6 +97,53 @@ class ChosenPhoto : AppCompatActivity(), LocationListener {
             )
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0.1f, this)
+    }
+
+    private fun setupEmoji() {
+        val gridLayout: GridLayout = findViewById(R.id.gridLayout1)
+
+        val imageResourceIds = listOf(
+            R.drawable.happy,
+            R.drawable.good,
+            R.drawable.okay,
+            R.drawable.sad,
+            R.drawable.verysad,
+        )
+
+        val taskDescArray = resources.getStringArray(R.array.emo_desc)
+
+        val imageResources = imageResourceIds.mapIndexedNotNull { index, resourceId ->
+            val description = taskDescArray.getOrNull(index)
+            if (description != null) {
+                ImageData(resourceId, description)
+            } else {
+                null
+            }
+        }
+
+        for (i in imageResources.indices) {
+            val imageView = ImageView(this)
+            val layoutParams = GridLayout.LayoutParams().apply {
+                width = 130
+                height = 130
+                columnSpec =
+                    GridLayout.spec(GridLayout.UNDEFINED, 1f) // Equal width for each column
+            }
+            imageView.layoutParams = layoutParams
+            val typeEmotions = imageResources[i].resourceId
+
+            val imageResource = imageResources[i].resourceId
+            val description = imageResources[i].description
+
+            imageView.setImageResource(imageResource)
+            imageView.contentDescription = description
+            imageView.setOnClickListener {
+
+                /** Додавання обраного до бази даних для графіку**/
+            }
+
+            gridLayout.addView(imageView)
+        }
     }
 
     override fun onLocationChanged(location: Location) {

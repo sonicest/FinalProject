@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
@@ -12,6 +13,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -33,7 +35,6 @@ import pt.ipt.finalproject.utilities.Constant
 
 
 class MapActivity : AppCompatActivity(), LocationListener {
-
 
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private val LOCATION_PERMISSION_CODE = 2;
@@ -111,12 +112,25 @@ class MapActivity : AppCompatActivity(), LocationListener {
                 return true
             }
 
+
             override fun longPressHelper(p: GeoPoint?): Boolean {
+
                 val point2 = GeoPoint(p)
                 val startMarker2 = Marker(map)
+                startMarker2.setIcon(resources.getDrawable(R.drawable.ic_circle))
                 startMarker2.position = point2
                 startMarker2.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
                 map.overlays.add(startMarker2)
+
+                Log.d("Place position", point2.toString())
+                startMarker2.id = "last"
+
+                basicAlert(
+                    "Question",
+                    "Do you want to save this place?",
+                    true,
+                    "No"
+                )
                 return true
             }
         })
@@ -131,6 +145,9 @@ class MapActivity : AppCompatActivity(), LocationListener {
             setTitle(name)
             setMessage(desc)
             setNegativeButton(button, negativeButtonClick)
+            if (boolean) {
+                setPositiveButton(button, positiveButtonClick)
+            }
             show()
             return false
         }
@@ -139,6 +156,16 @@ class MapActivity : AppCompatActivity(), LocationListener {
     val negativeButtonClick = { dialog: DialogInterface, which: Int ->
         dialog.dismiss()
         centerMap()
+    }
+
+    val positiveButtonClick = { dialog: DialogInterface, which: Int ->
+        openF()
+    }
+
+    fun openF() {
+        Intent(applicationContext, EmotionsActivity::class.java).also {
+            startActivity(it)
+        }
     }
 
     override fun onPause() {

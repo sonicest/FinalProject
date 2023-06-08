@@ -10,6 +10,8 @@
     <string name="appName">Feexob</string>
     <string name="apply_filter">Apply Filter</string>
     <string name="savedimages">Choose the task of your preference</string>
+    <string name="saveemotions">Take your time to note it down</string>
+    <string name="typeemotions">Choose how you feel in general</string>
     <string name="empty_list">Empty List</string>
     <string name="click_here">Click here</string>
     <string name="do_not_have_an_account">Do not have an account?</string>

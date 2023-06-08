@@ -1,5 +1,6 @@
 package pt.ipt.finalproject
 
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -104,6 +105,9 @@ class TaskActivity : AppCompatActivity() {
                     .setTitle("Task description")
                     .setMessage(description)
                     .setPositiveButton("Let's go") { _, _ ->
+                        Intent(applicationContext, EmotionsActivity::class.java).also {
+                            startActivity(it)
+                        }
                         showToast("Task selected!")
                     }
                     .setNegativeButton("Nope") { _, _ ->

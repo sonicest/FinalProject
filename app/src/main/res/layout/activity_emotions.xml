@@ -4,53 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/text_color"
-    tools:context=".ChosenPhoto">
+    android:background="@color/text_color">
 
 
-    <ProgressBar
-        android:id="@+id/previewProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/save"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emSpinner" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/image_preview"
+    <LinearLayout
+        android:id="@+id/layoutHeader"
         android:layout_width="match_parent"
-        android:layout_height="370dp"
-        android:layout_marginTop="@dimen/_45sdp"
-        android:padding="@dimen/_7ssp"
-        app:layout_constraintBottom_toBottomOf="@id/save"
-        app:layout_constraintTop_toTopOf="@id/emSpinner"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/save"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginStart="@dimen/_30sdp"
-        android:layout_marginBottom="@dimen/_25sdp"
-        android:src="@drawable/ic_save2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_height="?actionBarSize"
+        android:background="@color/text_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_12ssp"
+        app:layout_constraintTop_toTopOf="parent">
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabShare"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginEnd="@dimen/_30sdp"
-        android:layout_marginBottom="@dimen/_25sdp"
-        android:src="@drawable/ic_share"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_semibold"
+            android:includeFontPadding="false"
+            android:text="@string/saveemotions"
+            android:textAlignment="center"
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/_14ssp" />
 
-
-
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/layoutsec"
         android:layout_width="match_parent"
@@ -59,13 +41,15 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/_8sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
+        app:layout_constraintEnd_toEndOf="parent">
 
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:layout_weight="1"
             android:fontFamily="@font/poppins_semibold"
             android:includeFontPadding="false"
@@ -81,6 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="67dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
         android:alignmentMode="alignBounds"
         android:columnCount="5"
         android:gravity="center_vertical"
@@ -89,7 +74,6 @@
         app:layout_constraintTop_toBottomOf="@+id/layoutsec">
 
     </GridLayout>
-
     <LinearLayout
         android:id="@+id/layout3"
         android:layout_width="match_parent"
@@ -98,8 +82,8 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/_8sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout1">
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout1"
+        app:layout_constraintEnd_toEndOf="parent">
 
 
         <TextView
@@ -138,10 +122,54 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/inputEmotions"
-        tools:layout_editor_absoluteX="5dp" />
+        app:layout_constraintBottom_toTopOf="@id/layout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteX="5dp"/>
+
+    <LinearLayout
+        android:id="@+id/layout4"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/primaryText"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintTop_toBottomOf="@+id/emSpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/_12ssp">
 
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_semibold"
+            android:includeFontPadding="false"
+            android:text="Describe how you feel more detailed"
+            android:textAlignment="center"
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/_14ssp" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/inputDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|start"
+        android:lines="5"
+        android:maxLines="10"
+        android:minLines="5"
+        android:scrollbars="vertical"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:ems="10"
+        android:fontFamily="@font/poppins"
+        android:inputType="textMultiLine"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@id/layout4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

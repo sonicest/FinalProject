@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="emo_desc">
+        <item name="happy">happy</item>
+        <item name="good">good</item>
+        <item name="okay">okay</item>
+        <item name="sad">sad</item>
+        <item name="verysad">verysad</item>
+        <!-- Add more items as needed -->
+    </string-array>
+</resources>
