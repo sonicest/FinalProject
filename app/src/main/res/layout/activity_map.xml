@@ -13,6 +13,7 @@
         android:layout_height="@dimen/_60sdp"
         android:layout_marginTop="@dimen/_11sdp"
         android:layout_marginEnd="@dimen/_11sdp"
+        android:backgroundTint="@color/button3_color"
         android:src="@drawable/ic_my_location_24"/>
 
     <org.osmdroid.views.MapView

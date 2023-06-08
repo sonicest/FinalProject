@@ -110,6 +110,9 @@ class MainActivity : AppCompatActivity() {
                 false,
                 "OK"
             )
+            Intent(applicationContext, AnalysisActivity::class.java).also {
+                startActivity(it)
+            }
         }
     }
 

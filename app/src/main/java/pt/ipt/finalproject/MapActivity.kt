@@ -116,21 +116,26 @@ class MapActivity : AppCompatActivity(), LocationListener {
             override fun longPressHelper(p: GeoPoint?): Boolean {
 
                 val point2 = GeoPoint(p)
-                val startMarker2 = Marker(map)
-                startMarker2.setIcon(resources.getDrawable(R.drawable.ic_circle))
-                startMarker2.position = point2
-                startMarker2.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-                map.overlays.add(startMarker2)
 
-                Log.d("Place position", point2.toString())
-                startMarker2.id = "last"
+                if (basicAlert(
+                        "Question",
+                        "Do you want to save this place?",
+                        true,
+                        "No"
+                    )
+                ) {
 
-                basicAlert(
-                    "Question",
-                    "Do you want to save this place?",
-                    true,
-                    "No"
-                )
+                    val startMarker2 = Marker(map)
+                    startMarker2.setIcon(resources.getDrawable(R.drawable.ic_circle))
+                    startMarker2.position = point2
+                    startMarker2.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+                    map.overlays.add(startMarker2)
+
+                    Log.d("Place position", point2.toString())
+                    startMarker2.id = "last"
+                    /** зберегти ці дані**/
+
+                }
                 return true
             }
         })
@@ -146,7 +151,7 @@ class MapActivity : AppCompatActivity(), LocationListener {
             setMessage(desc)
             setNegativeButton(button, negativeButtonClick)
             if (boolean) {
-                setPositiveButton(button, positiveButtonClick)
+                setPositiveButton("Yes", positiveButtonClick)
             }
             show()
             return false

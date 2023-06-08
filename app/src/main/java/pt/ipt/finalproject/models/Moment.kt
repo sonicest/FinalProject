@@ -8,3 +8,10 @@ data class Moment(
     val location: String
     //val userId: String
 )
+
+data class Emotions(
+    val id: String,
+    val type: String,
+    val name: String,
+    val date: String,
+)

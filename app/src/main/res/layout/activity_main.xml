@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/landing_background"
-        tools:layout_editor_absoluteX="-52dp"
+        tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
     <Button
@@ -70,10 +70,10 @@
         app:cornerRadius="@dimen/_60sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.185"
+        app:layout_constraintHorizontal_bias="0.209"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcome"
-        app:layout_constraintVertical_bias="0.732" />
+        app:layout_constraintVertical_bias="0.74" />
 
     <Button
         android:id="@+id/experience"
@@ -87,10 +87,10 @@
         app:cornerRadius="@dimen/_60sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.816"
+        app:layout_constraintHorizontal_bias="0.77"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcome"
-        app:layout_constraintVertical_bias="0.734" />
+        app:layout_constraintVertical_bias="0.736" />
 
     <TextView
         android:id="@+id/welcoming_text"

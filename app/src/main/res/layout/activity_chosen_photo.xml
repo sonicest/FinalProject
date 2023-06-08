@@ -35,6 +35,7 @@
         android:layout_marginStart="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_25sdp"
         android:src="@drawable/ic_save2"
+        android:backgroundTint="@color/button2_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -46,6 +47,7 @@
         android:layout_marginEnd="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_25sdp"
         android:src="@drawable/ic_share"
+        android:backgroundTint="@color/button2_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

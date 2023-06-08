@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/text_color">
+
+    <LinearLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="411dp"
+        android:layout_height="108dp"
+        android:layout_marginTop="@dimen/_12ssp"
+        android:background="@color/text_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_semibold"
+            android:includeFontPadding="false"
+            android:text="Your emotions during the week"
+            android:textAlignment="center"
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/_14ssp" />
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        android:padding="@dimen/_3ssp"
+        android:src="@drawable/happy"
+        app:layout_constraintEnd_toStartOf="@+id/chart"
+        app:layout_constraintTop_toBottomOf="@+id/layoutHeader" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="48dp"
+        android:padding="@dimen/_3ssp"
+        android:src="@drawable/good"
+        app:layout_constraintEnd_toStartOf="@+id/chart"
+        app:layout_constraintTop_toBottomOf="@+id/imageView1" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="48dp"
+        android:padding="@dimen/_3ssp"
+        android:src="@drawable/okay"
+        app:layout_constraintEnd_toStartOf="@+id/chart"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="48dp"
+        android:padding="@dimen/_3ssp"
+        android:src="@drawable/sad"
+        app:layout_constraintEnd_toStartOf="@+id/chart"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="48dp"
+        android:padding="@dimen/_3ssp"
+        android:src="@drawable/verysad"
+        app:layout_constraintEnd_toStartOf="@+id/chart"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/chart"
+        android:layout_width="335dp"
+        android:layout_height="484dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutHeader" />
+</androidx.constraintlayout.widget.ConstraintLayout>
