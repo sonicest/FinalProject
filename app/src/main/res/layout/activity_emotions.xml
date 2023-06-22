@@ -123,15 +123,19 @@
 
     <AutoCompleteTextView
         android:id="@+id/inputEmotions"
-        android:layout_width="match_parent"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_15sdp"
         android:ems="10"
         android:fontFamily="@font/poppins"
         android:inputType="text"
         android:textSize="15sp"
+        android:textColor="#47453D"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/emSpinner"
-        app:layout_constraintTop_toBottomOf="@id/layout3" />
+        app:layout_constraintTop_toBottomOf="@id/layout3"
+        tools:layout_editor_absoluteX="15dp" />
 
     <Spinner
         android:id="@+id/emSpinner"
@@ -141,6 +145,8 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:textSize="20sp"
+        android:background="@color/text_color"
+        android:backgroundTint="@color/text_color"
         app:layout_constraintTop_toBottomOf="@id/inputEmotions"
         app:layout_constraintBottom_toTopOf="@id/layout4"
         app:layout_constraintEnd_toEndOf="parent"
@@ -177,18 +183,21 @@
 
     <EditText
         android:id="@+id/inputDesc"
-        android:layout_width="match_parent"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:gravity="top|start"
         android:lines="5"
         android:maxLines="10"
         android:minLines="5"
+        android:textColor="#47453D"
         android:scrollbars="vertical"
         android:layout_marginTop="15dp"
         android:ems="10"
         android:fontFamily="@font/poppins"
         android:inputType="textMultiLine"
         android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -104,12 +104,6 @@ class MainActivity : AppCompatActivity() {
             )
         }
         binding.info.setOnClickListener {
-            basicAlert(
-                "Information",
-                "Hi there",
-                false,
-                "OK"
-            )
             Intent(applicationContext, AnalysisActivity::class.java).also {
                 startActivity(it)
             }

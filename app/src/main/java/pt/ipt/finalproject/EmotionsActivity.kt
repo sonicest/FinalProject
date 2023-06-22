@@ -42,6 +42,7 @@ class EmotionsActivity : AppCompatActivity() {
     var typeId = 0
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEmotionsBinding.inflate(layoutInflater)
@@ -225,7 +226,5 @@ class EmotionsActivity : AppCompatActivity() {
     private fun isUriEmpty(uri: Uri?): Boolean {
         return uri == null || uri == Uri.EMPTY
     }
-
-
 
 }

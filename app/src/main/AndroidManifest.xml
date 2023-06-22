@@ -64,6 +64,14 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".ReccomendationActivity"
+            android:exported="false"
+            android:theme="@style/FullScreen">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".MomentsActivity"
             android:exported="false">
 
@@ -73,8 +81,8 @@
         </activity>
         <activity
             android:name=".AnalysisActivity"
-            android:exported="false">
-
+            android:exported="false"
+            android:theme="@style/FullScreen">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

@@ -1,6 +1,7 @@
 package pt.ipt.finalproject
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -28,6 +29,7 @@ class AnalysisActivity : AppCompatActivity() {
         binding = ActivityAnalysisBinding.inflate(layoutInflater)
         setContentView(binding.root)
         showChart()
+        setListener()
     }
 
     private fun showChart() {
@@ -152,6 +154,14 @@ class AnalysisActivity : AppCompatActivity() {
         }
 
         return result
+    }
+
+    private fun setListener() {
+        binding.rec.setOnClickListener {
+            Intent(applicationContext, ReccomendationActivity::class.java).also {
+                startActivity(it)
+            }
+        }
     }
 
 }

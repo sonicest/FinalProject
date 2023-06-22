@@ -35,7 +35,7 @@
         android:layout_marginStart="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_25sdp"
         android:src="@drawable/ic_save2"
-        android:backgroundTint="@color/button2_color"
+        android:backgroundTint="#A19D8B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -47,7 +47,7 @@
         android:layout_marginEnd="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_25sdp"
         android:src="@drawable/ic_share"
-        android:backgroundTint="@color/button2_color"
+        android:backgroundTint="#A19D8B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -122,13 +122,16 @@
 
     <AutoCompleteTextView
         android:id="@+id/inputEmotions"
-        android:layout_width="match_parent"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_15sdp"
         android:ems="10"
         android:fontFamily="@font/poppins"
         android:inputType="text"
         android:textSize="15sp"
+        android:textColor="#47453D"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/emSpinner"
         app:layout_constraintTop_toBottomOf="@id/layout3" />
 
